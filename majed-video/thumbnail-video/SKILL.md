@@ -1,12 +1,14 @@
 ---
 name: thumbnail-video
-description: يصمم كفر الريل (أول فريم بالفيديو، كل المهم بمربع 1:1 فينقرا بشبكة البروفايل) وثمبنيل يوتيوب 16:9 بثلاث أفكار — بأحجام تنقرا بشاشة الجوال. Use when user says "سو كفر"، "كفر الريل"، "غلاف الريل"، "ثمبنيل"، "ثمب يوتيوب"، "صورة مصغرة"، "thumbnail"، "الكفر ما يبين"، or after any finished video. Not for carousel covers.
+description: يصمم كفر الريل (أول فريم بالفيديو، كل المهم بمربع 1:1 فينقرا بشبكة البروفايل) وثمبنيل يوتيوب 16:9 بثلاث أفكار — بأحجام تنقرا بشاشة الجوال. Use when user says "سو كفر"، "كفر الريل"، "غلاف الريل"، "ثمبنيل"، "ثمب يوتيوب"، "صورة مصغرة"، "thumbnail"، "الكفر ما يبين"، or after any finished video. Not for carousel covers. — Customized for Moosa Mohsin TRD Garage (Muscat): garage brand, WhatsApp end card, licence plates always covered.
 ---
 
 # الكفر والثمبنيل — اللي ينقرا بالجوال
 
 **المحرّك مشترك** مع سكل الريل. كل `scripts/` و`references/` من هني:
 `${CLAUDE_SKILL_DIR}/../video-ad-editor`
+
+> 🏁 **نسخة كراج موسى محسن TRD (مسقط).** أول شي اقرأ `references/garage-brand.md` — الهوية، كرت الختام (واتساب 98880043 · `@repair_painting_cars`)، النبرة، و⛔ **رقم لوحة أي سيارة ما يبين ولا بفريم**: غطّه بـ`scripts/45_plate_cover.py` قبل التصميم — الكفر يتشاف أكثر من الفيديو نفسه.
 
 **أول شي:** نفّذ «Step -1 — Model suggestion» من `references/start.md` (سطرين، مرة بالجلسة، بلا إيقاف الشغل). بعدها اقرأ `references/thumbnails.md` — الأحجام الدنيا ومصادرها. الشبكة تصغّر الكفر لـ12٪، فاللي تحت الحد ما ينقرا.
 

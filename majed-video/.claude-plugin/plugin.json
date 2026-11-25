@@ -1,7 +1,7 @@
 {
   "name": "majed-video",
-  "version": "6.8.1",
-  "description": "Arabic video editing for Claude Code — 6 skills: talking-head reels, product review reels with voiceover, 3D motion explainers, podcasts, beat-synced montage, covers & thumbnails. DaVinci Resolve is a separate add-on (majed-davinci).",
+  "version": "6.8.1-trd.1",
+  "description": "Arabic video editing for Claude Code — customized for Moosa Mohsin TRD Garage (Muscat, Oman): garage brand identity, WhatsApp end card, Omani tone, and licence plates always covered with the garage's plate design. 6 skills: talking-head reels, work/review reels with voiceover, 3D motion explainers, podcasts, beat-synced before/after montage, covers & thumbnails.",
   "author": {
     "name": "Majed Alzaabi",
     "url": "https://github.com/majedphotos"

@@ -1,6 +1,6 @@
 ---
 name: video-ad-editor
-description: يمنتج فيديو كلام للكاميرا إلى ريل أو إعلان 9:16 — يشيل السكتات، كابشن عربي بتوقيت الكلمة، وموشن قرافيكس بألوانه. Use when user says "منتج هذا المقطع"، "سو من هذا الفيديو إعلان"، "شيّل السكتات"، "حوّل الفيديو لريل"، "ركّب كابشن عربي"، "اقص الصمت"، or sends a talking-head video. Not for carousels or video covers.
+description: يمنتج فيديو كلام للكاميرا إلى ريل أو إعلان 9:16 — يشيل السكتات، كابشن عربي بتوقيت الكلمة، وموشن قرافيكس بألوانه. Use when user says "منتج هذا المقطع"، "سو من هذا الفيديو إعلان"، "شيّل السكتات"، "حوّل الفيديو لريل"، "ركّب كابشن عربي"، "اقص الصمت"، or sends a talking-head video. Not for carousels or video covers. — Customized for Moosa Mohsin TRD Garage (Muscat): garage brand, WhatsApp end card, licence plates always covered.
 ---
 
 # ريل من فيديو كلام — بلا برنامج مونتاج
@@ -14,6 +14,8 @@ description: يمنتج فيديو كلام للكاميرا إلى ريل أو 
 
 **المسارات:** كل `scripts/` و`references/` و`motion/` هني من مجلد هالسكل:
 `${CLAUDE_SKILL_DIR}`
+
+> 🏁 **نسخة كراج موسى محسن TRD (مسقط).** أول شي اقرأ `references/garage-brand.md` — الهوية، كرت الختام (واتساب 98880043 · `@repair_painting_cars`)، النبرة، و⛔ **رقم لوحة أي سيارة ما يبين ولا بفريم**: غطّه بـ`scripts/45_plate_cover.py`.
 
 ---
 

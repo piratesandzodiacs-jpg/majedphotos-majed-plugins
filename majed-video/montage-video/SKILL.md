@@ -1,12 +1,14 @@
 ---
 name: montage-video
-description: مونتاج مقاطع بلا كلام على الإيقاع — مجلد مقاطع (مقهى، سفرة، منتج، مكان، فعالية) يتحوّل لفيديو واحد 9:16 يختار أحلى لحظة من كل مقطع ويقطع على نبضات الصوت. Use when user says "مونتاج من هالمقاطع"، "سو فيديو من هالكلبات"، "ركّب المقاطع على الأغنية"، "مونتاج على الإيقاع"، or sends a folder of clips without speech. Not for a talking video (use video-ad-editor).
+description: مونتاج مقاطع بلا كلام على الإيقاع — مجلد مقاطع (مقهى، سفرة، منتج، مكان، فعالية) يتحوّل لفيديو واحد 9:16 يختار أحلى لحظة من كل مقطع ويقطع على نبضات الصوت. Use when user says "مونتاج من هالمقاطع"، "سو فيديو من هالكلبات"، "ركّب المقاطع على الأغنية"، "مونتاج على الإيقاع"، or sends a folder of clips without speech. Not for a talking video (use video-ad-editor). — Customized for Moosa Mohsin TRD Garage (Muscat): garage brand, WhatsApp end card, licence plates always covered.
 ---
 
 # مونتاج مقاطع بلا كلام
 
 **المحرّك مشترك** مع سكل الريل. كل `scripts/` و`references/` من هني:
 `${CLAUDE_SKILL_DIR}/../video-ad-editor`
+
+> 🏁 **نسخة كراج موسى محسن TRD (مسقط).** أول شي اقرأ `references/garage-brand.md` — الهوية، كرت الختام (واتساب 98880043 · `@repair_painting_cars`)، النبرة، و⛔ **رقم لوحة أي سيارة ما يبين ولا بفريم**: غطّه بـ`scripts/45_plate_cover.py` قبل التجميع — افحص ورقة اللقطات المرقّمة لوحة لوحة. «قبل/بعد» للسيارة هو الشغل الأكثر هني.
 
 ## الخطوات
 

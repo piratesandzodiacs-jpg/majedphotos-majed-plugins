@@ -43,8 +43,12 @@ if [ "$1" = "--update" ]; then
   rm -rf "$TMP"; exit 0
 fi
 LATEST="$(curl -sL -m 5 https://api.github.com/repos/majedphotos/video-ad-editor/releases/latest 2>/dev/null | sed -n 's/.*"tag_name": *"v\([0-9.]*\)".*/\1/p' | head -1)"
+# 🏁 نسخة الكراج: التحديث من ماجد يمسح التخصيص (هوية الكراج + تغطية اللوحات) — ننبّه بدل ما نقترحه عادي
+GARAGE=0; [ -f "$SKROOT/references/garage-brand.md" ] && GARAGE=1
 if [ -n "$LATEST" ] && [ "$LATEST" != "$LOCALV" ] && [ "$(printf '%s\n%s' "$LOCALV" "$LATEST" | sort -V | tail -1)" = "$LATEST" ]; then
-  if [ "$PLUGIN" = 1 ]; then
+  if [ "$GARAGE" = 1 ]; then
+    echo "🆕 فيه إصدار أحدث من البلقن الأصلي: v$LATEST (عندك v$LOCALV، نسخة الكراج). ⛔ لا تحدّث بنفسك — التحديث يمسح هوية الكراج وتغطية اللوحات. قل له بسطر إن فيه إصدار جديد، ولو يبيه يندمج بنسخة الكراج من مستودعه (majed-video/ بمستودع majedphotos-majed-plugins) قبل ما ينرفع."
+  elif [ "$PLUGIN" = 1 ]; then
     echo "🆕 فيه إصدار أحدث من السكل: v$LATEST (عندك v$LOCALV) — اسأل المستخدم، ولو وافق شغّل: $PLUG_UPD  (ثم جلسة جديدة)"
   else
     echo "🆕 فيه إصدار أحدث من السكل: v$LATEST (عندك v$LOCALV) — اسأل المستخدم، ولو وافق شغّل: bash scripts/00_setup.sh --update"

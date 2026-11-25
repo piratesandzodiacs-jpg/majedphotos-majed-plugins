@@ -1,11 +1,13 @@
 ---
 name: review-video
-description: يمنتج ريل مراجعة منتج 9:16 — تعليق صوتي فوق لقطات المنتج، خطوط تتبع القطعة لحظة ذكرها، زومات ناعمة، كروت مواصفات، كرت خصم، شعار المتجر والبراند، وكفر المنتج مقصوص. Use when user says "مراجعة منتج"، "ريل مراجعة"، "فتح علبة"، "انبوكسنق"، "شورت تقني"، "إعلان منتج بصوتي"، "عرض وخصم"، "خطوط على القطعة"، or sends product footage plus a voice note or script. Not for talking-head video only (use video-ad-editor) or clips with no speech (use montage-video).
+description: يمنتج ريل مراجعة منتج 9:16 — تعليق صوتي فوق لقطات المنتج، خطوط تتبع القطعة لحظة ذكرها، زومات ناعمة، كروت مواصفات، كرت خصم، شعار المتجر والبراند، وكفر المنتج مقصوص. Use when user says "مراجعة منتج"، "ريل مراجعة"، "فتح علبة"، "انبوكسنق"، "شورت تقني"، "إعلان منتج بصوتي"، "عرض وخصم"، "خطوط على القطعة"، or sends product footage plus a voice note or script. Not for talking-head video only (use video-ad-editor) or clips with no speech (use montage-video). — Customized for Moosa Mohsin TRD Garage (Muscat): garage brand, WhatsApp end card, licence plates always covered.
 ---
 
 # ريل مراجعة منتج
 
 المحرّك مشترك. كل المسارات من: `${CLAUDE_SKILL_DIR}/../video-ad-editor`
+
+> 🏁 **نسخة كراج موسى محسن TRD (مسقط).** أول شي اقرأ `references/garage-brand.md` — الهوية، كرت الختام (واتساب 98880043 · `@repair_painting_cars`)، النبرة، و⛔ **رقم لوحة أي سيارة ما يبين ولا بفريم**: غطّه بـ`scripts/45_plate_cover.py` بعد `inspect` وقبل الخطة. «المنتج» هني = السيارة أو الشغلة (شاصي، صبغ، تغليف).
 
 اقرأ أول: `references/start.md` ثم `references/pro-editor.md` ثم `references/review-video.md`.
 

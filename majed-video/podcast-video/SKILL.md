@@ -1,12 +1,14 @@
 ---
 name: podcast-video
-description: يمنتج البودكاست والمقابلات — كاميرتين أو أكثر لنفس الجلسة إلى ريلات 9:16 بكابشن عربي وهوك مكتوب، أو الحلقة كاملة 16:9 لليوتيوب، أو حلقة ساعة إلى عدة ريلات. Use when user says "بودكاست"، "كاميرتين"، "الحلقة كاملة بالعرض"، "حلقة يوتيوب"، "ريلات من الحلقة"، "طلّع ريلات من المقابلة"، or sends multi-camera files or a long episode. Not for a single talking video (use video-ad-editor).
+description: يمنتج البودكاست والمقابلات — كاميرتين أو أكثر لنفس الجلسة إلى ريلات 9:16 بكابشن عربي وهوك مكتوب، أو الحلقة كاملة 16:9 لليوتيوب، أو حلقة ساعة إلى عدة ريلات. Use when user says "بودكاست"، "كاميرتين"، "الحلقة كاملة بالعرض"، "حلقة يوتيوب"، "ريلات من الحلقة"، "طلّع ريلات من المقابلة"، or sends multi-camera files or a long episode. Not for a single talking video (use video-ad-editor). — Customized for Moosa Mohsin TRD Garage (Muscat): garage brand, WhatsApp end card, licence plates always covered.
 ---
 
 # البودكاست والمقابلات
 
 **المحرّك مشترك** مع سكل الريل. كل `scripts/` و`references/` من هني:
 `${CLAUDE_SKILL_DIR}/../video-ad-editor`
+
+> 🏁 **نسخة كراج موسى محسن TRD (مسقط).** أول شي اقرأ `references/garage-brand.md` — الهوية، كرت الختام (واتساب 98880043 · `@repair_painting_cars`)، النبرة، و⛔ **رقم لوحة أي سيارة ما يبين ولا بفريم**: غطّه بـ`scripts/45_plate_cover.py` لو بانت سيارة بالكادر، وخذ موافقة الزبون على الظهور منه هو.
 
 ## الخطوات
 

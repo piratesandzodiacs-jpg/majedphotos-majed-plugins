@@ -70,3 +70,9 @@
 - `scripts/review/review.py`: فحص المواد، الصوت، التتبع، فريمات التجربة، الرسم، التسليم، والكفر.
 - `scripts/review/overlay.html` + `render_overlay.js`: طبقة الموشن من `plan.json`.
 - `scripts/review/stage.py` + `cover.html` + `cover_render.js`: كفر المنتج المقصوص.
+
+## 🏁 نسخة الكراج
+
+| السكربت | شنو | متى |
+|---|---|---|
+| `45_plate_cover.py` (`grid` · `cover` · `check`) | يغطي لوحات السيارات بتصميم لوحة الكراج (أو تغبيش) — مربع ثابت، أو مفاتيح تنتقل بنعومة، أو تتبع `--track` | أي مقطع فيه لوحة مقروءة — `references/garage-brand.md` |

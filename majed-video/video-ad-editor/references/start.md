@@ -24,6 +24,11 @@ Editing quality depends on the model and the effort level. Check yourself first,
    - No cost, speed or minute figures — none were measured.
    - Do not suggest `ultracode` for a single video: it splits the work across agents and each draws with its own taste. One agent at high effort is better.
 
+## 🏁 نسخة الكراج — اقرأ `references/garage-brand.md` قبل أي شي ثاني
+
+هالبلقن مخصّص لـ**Moosa Mohsin TRD Garage** (مسقط). الملف فيه الاسم والتواصل والنبرة وكرت الختام والألوان، و**قاعدة اللوحات**:
+⛔ رقم لوحة أي سيارة ما ينقرا ولا بفريم — يتغطّى بتصميم لوحة الكراج (`scripts/45_plate_cover.py`). لوحة مقروءة بالنهائي = لا تسلّم.
+
 ## قبل أي تنفيذ — وسّع الطلب
 
 برومبت المستخدم القصير بداية، مو خطة. نفس البرومبت يطلع ضعيف لو نفذته حرفياً.
@@ -97,6 +102,7 @@ python3 scripts/00_onboard.py theme <work>
 (الرمز 4 = فيه `theme.json` من قبل — خلّه.)
 
 **2. طبع `{}` وعنده ملف هوية** (`.auto-memory/creator-profile.md`) ← لا تفتحها، امشِ على الخطوة 1.
+   🏁 **نسخة الكراج:** `references/garage-brand.md` = ملف الهوية دايماً ← ⛔ لا تفتح الصفحة أبداً إلا لو طلب «غيّر إعداداتي».
 
 **3. طبع `{}` وما عنده ملف** ← شغّل الصفحة بالخلفية:
 
@@ -123,6 +129,8 @@ python3 scripts/00_onboard.py --work <work>
 تغيير لون أساسي بطلب صريح منه بس.
 
 **0.** انكتب `theme.json` بالخطوة 0.5؟ تخطّ هالخطوة.
+
+**🏁 نسخة الكراج:** الهوية من `references/garage-brand.md` (الشعار، الحساب `@repair_painting_cars`، كرت الختام، الألوان المعتمدة أو المقترحة). اكتب `theme.json` منه، وقل بسطر: «ماشي على هوية الكراج: ألوان كذا — تمام؟». الخطوات 1–2 تحت بس لو ناقص الشعار أو الألوان.
 
 **1.** دوّر `.auto-memory/creator-profile.md`.
 لقيته؟ خذ الألوان والخط والحساب، وقل: «راح أمشي بألوانك: كذا وكذا — تمام؟»
