@@ -14,7 +14,11 @@
         - مفتاح واحد  = مربع ثابت (لقطة ثابتة).
         - عدة مفاتيح = المربع ينتقل بين المفاتيح بنعومة (خطي).
         - --track     = يتبع اللوحة بين المفاتيح (OpenCV MIL)، ويرجع لمكان المفتاح عند كل مفتاح.
+        - مفتاح بـ6 أرقام "t,x,y,w,h,زاوية" = لوحة مايلة: x,y,w,h للوحة قبل الميلان حول مركزها.
+        - --auto-cuts / --cut = فيديو فيه أكثر من لقطة: المربع ما ينزلق من لقطة للثانية،
+                        ولقطة بلا مفتاح ما تتغطى (يعني ما فيها لوحة).
         - --cover     = صورة لوحة الكراج (PNG). بدونها: تغبيش قوي + إطار، ما يُقرا منه شي.
+                        كرّرها (العريض والقصير) ويختار الأقرب لنسبة كل لوحة.
                         تحافظ على نسبة التصميم وتكبر حول مركز اللوحة حتى تغطيها كاملة (--stretch = مطّ بدل كذا).
         - --from/--to = يغطي بس بين هالثانيتين (الباقي يمشي كما هو).
         الصوت ينسخ كما هو.
@@ -82,8 +86,10 @@ def parse_keys(keys):
     ks = []
     for k in keys:
         p = [float(v) for v in k.split(",")]
-        if len(p) != 5:
-            sys.exit(f"⚠️ المفتاح لازم 5 أرقام t,x,y,w,h — وصلني: {k}")
+        if len(p) == 5:
+            p.append(0.0)
+        if len(p) != 6:
+            sys.exit(f"⚠️ المفتاح لازم t,x,y,w,h أو t,x,y,w,h,زاوية — وصلني: {k}")
         ks.append(p)
     return sorted(ks)
 
@@ -97,7 +103,27 @@ def interp(ks, t):
         if a[0] <= t <= b[0]:
             u = 0 if b[0] == a[0] else (t - a[0]) / (b[0] - a[0])
             u = u * u * (3 - 2 * u)  # نعومة
-            return [a[i] + (b[i] - a[i]) * u for i in range(1, 5)]
+            return [a[i] + (b[i] - a[i]) * u for i in range(1, 6)]
+
+
+def detect_cuts(path, thr=25.0):
+    """قطعات اللقطات (ثواني) — فرق الفريمات المتتالية بصورة صغيرة رمادية."""
+    cap = cv2.VideoCapture(path)
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30
+    prev, i, cuts = None, 0, []
+    while True:
+        ok, f = cap.read()
+        if not ok:
+            break
+        g = cv2.resize(cv2.cvtColor(f, cv2.COLOR_BGR2GRAY), (108, 192)).astype(np.float32)
+        if prev is not None and np.abs(g - prev).mean() > thr:
+            cuts.append(i / fps)
+        prev, i = g, i + 1
+    return cuts
+
+
+def segment_of(t, cuts):
+    return sum(1 for c in cuts if t >= c - 1e-6)
 
 
 def load_cover(path):
@@ -113,9 +139,21 @@ def load_cover(path):
     return im
 
 
-def paint(frame, box, cover, pad, stretch=False):
+def pick_cover(covers, w, h):
+    """أقرب تصميم لنسبة اللوحة (اللوحات الخلفية القصيرة تاخذ التصميم القصير)."""
+    if not covers:
+        return None
+    r = w / max(h, 1)
+    return min(covers, key=lambda c: abs(math.log((c.shape[1] / c.shape[0]) / r)))
+
+
+def paint(frame, box, covers, pad, stretch=False, cover=None):
     H, W = frame.shape[:2]
-    x, y, w, h = box
+    x, y, w, h, ang = box
+    if cover is None:
+        cover = pick_cover(covers, w, h)
+    if abs(ang) > 0.5:
+        return paint_rotated(frame, (x, y, w, h, ang), cover, pad, stretch)
     if cover is not None and not stretch:
         # نحافظ على نسبة التصميم: نكبّر الضلع الناقص (حول نفس المركز) حتى يغطي اللوحة كاملة
         ar = cover.shape[1] / cover.shape[0]
@@ -145,10 +183,58 @@ def paint(frame, box, cover, pad, stretch=False):
         cv2.rectangle(roi, (0, 0), (rw - 1, rh - 1), (30, 30, 30), max(2, rh // 18))
 
 
+def paint_rotated(frame, box, cover, pad, stretch):
+    """لوحة مايلة: x,y,w,h = اللوحة قبل الميلان (حول مركزها)، والزاوية بالدرجات (موجب = مع عقارب الساعة)."""
+    H, W = frame.shape[:2]
+    x, y, w, h, ang = box
+    cx, cy = x + w / 2, y + h / 2
+    if cover is not None and not stretch:
+        ar = cover.shape[1] / cover.shape[0]
+        if w / h < ar:
+            w = h * ar
+        else:
+            h = w / ar
+    w, h = w * (1 + 2 * pad), h * (1 + 2 * pad)
+    th = math.radians(ang)
+    co, si = math.cos(th), math.sin(th)
+    # tl, tr, br, bl — الصورة محورها y لتحت، فالزاوية الموجبة = مع عقارب الساعة
+    pts = np.float32([[cx + dx * co - dy * si, cy + dx * si + dy * co]
+                      for dx, dy in [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2)]])
+    mask = np.zeros((H, W), np.uint8)
+    cv2.fillConvexPoly(mask, pts.astype(np.int32), 255, cv2.LINE_AA)
+    bx, by, bw, bh = cv2.boundingRect(pts.astype(np.int32))
+    x0, y0, x1, y1 = max(0, bx - 4), max(0, by - 4), min(W, bx + bw + 4), min(H, by + bh + 4)
+    if x1 - x0 < 2 or y1 - y0 < 2:
+        return
+    roi = frame[y0:y1, x0:x1]
+    m = mask[y0:y1, x0:x1].astype(np.float32)[..., None] / 255
+    base = cv2.GaussianBlur(roi, (0, 0), max(w, h) / 6 + 1)
+    if cover is None:
+        small = cv2.resize(roi, (max(1, (x1 - x0) // 12), max(1, (y1 - y0) // 12)), interpolation=cv2.INTER_AREA)
+        top = cv2.GaussianBlur(cv2.resize(small, (x1 - x0, y1 - y0), interpolation=cv2.INTER_NEAREST), (0, 0), max(w, h) / 10 + 1)
+        al = m
+    else:
+        ch, cw = cover.shape[:2]
+        src = np.float32([[0, 0], [cw, 0], [cw, ch], [0, ch]])
+        M = cv2.getPerspectiveTransform(src, pts - np.float32([x0, y0]))
+        warped = cv2.warpPerspective(cover, M, (x1 - x0, y1 - y0), flags=cv2.INTER_AREA,
+                                     borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0, 0))
+        top = warped[:, :, :3].astype(np.float32)
+        ca = warped[:, :, 3:4].astype(np.float32) / 255
+        # تحت الصورة تغبيش داخل حدود اللوحة، والصورة فوقه
+        top = top * ca + base * (1 - ca)
+        al = m
+    roi[:] = (top * al + roi * (1 - al)).astype(np.uint8)
+
+
 def cmd_cover(a):
     W, H, fps, dur, has_audio = probe(a.video)
     ks = parse_keys(a.key)
-    cover = load_cover(a.cover)
+    covers = [load_cover(c) for c in (a.cover or [])]
+    cuts = sorted(float(c) for c in (a.cut or []))
+    if a.auto_cuts:
+        cuts = sorted(set(cuts + detect_cuts(a.video)))
+        print("✂️ القطعات: " + (", ".join(f"{c:.2f}" for c in cuts) or "ما فيه"))
     t_from = a.t_from if a.t_from is not None else -1
     t_to = a.t_to if a.t_to is not None else 1e9
 
@@ -170,23 +256,26 @@ def cmd_cover(a):
             break
         f = np.frombuffer(buf, np.uint8).reshape(H, W, 3).copy()
         t = n / fps
-        if t_from <= t <= t_to:
-            box = interp(ks, t)
+        sg = segment_of(t, cuts)
+        sk = [k for k in ks if segment_of(k[0], cuts) == sg]   # المفاتيح ما تعبر القطع
+        if t_from <= t <= t_to and sk:
+            box = interp(sk, t)
             if a.track:
-                # أعد البذر عند بداية كل مقطع بين مفتاحين
-                s = sum(1 for k in ks if k[0] <= t)
+                # أعد البذر عند بداية كل مقطع بين مفتاحين (ومع كل قطعة)
+                s = (sg, sum(1 for k in sk if k[0] <= t))
                 if s != seg:
                     seg = s
                     tracker = cv2.TrackerMIL_create()
-                    tracker.init(f, tuple(int(v) for v in box))
+                    tracker.init(f, tuple(int(v) for v in box[:4]))
                 else:
                     ok, tb = tracker.update(f)
                     # لو التتبع ضاع أو ابتعد وايد عن المسار، نرجع للمسار المحسوب
                     if ok and abs(tb[0] - box[0]) < box[2] * 1.5 and abs(tb[1] - box[1]) < box[3] * 2:
-                        box = [tb[0], tb[1], box[2], box[3]]
+                        box = [tb[0], tb[1], box[2], box[3], box[4]]
                     else:
                         lost += 1
-            paint(f, box, cover, a.pad, a.stretch)
+            # تصميم واحد لكل لقطة (من أول مفتاح فيها) — ما يتبدّل بنص اللقطة
+            paint(f, box, covers, a.pad, a.stretch, pick_cover(covers, sk[0][3], sk[0][4]))
         enc.stdin.write(f.tobytes())
         n += 1
     enc.stdin.close()
@@ -226,7 +315,10 @@ def main():
     g = sp.add_parser("grid"); g.add_argument("video"); g.add_argument("sec", type=float); g.add_argument("out", nargs="?")
     c = sp.add_parser("cover"); c.add_argument("video"); c.add_argument("out")
     c.add_argument("--key", action="append", required=True)
-    c.add_argument("--cover"); c.add_argument("--track", action="store_true")
+    c.add_argument("--cover", action="append", help="تصميم اللوحة — كرّره (عريض وقصير) ويختار الأقرب لنسبة كل لوحة")
+    c.add_argument("--track", action="store_true")
+    c.add_argument("--cut", action="append", help="وقت قطع بين لقطتين (ثواني) — المفاتيح ما تنتقل عبره")
+    c.add_argument("--auto-cuts", action="store_true", help="يكشف القطعات بنفسه")
     c.add_argument("--pad", type=float, default=0.12)
     c.add_argument("--stretch", action="store_true", help="مطّ التصميم على مقاس المربع بدل ما يحافظ على نسبته")
     c.add_argument("--from", dest="t_from", type=float); c.add_argument("--to", dest="t_to", type=float)
