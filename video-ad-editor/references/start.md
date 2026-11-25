@@ -1,0 +1,189 @@
+<!-- مرجع مشترك لكل أوضاع السكل — يُقرأ أول كل شغلة -->
+
+# البداية — جهّز الأدوات، والذوق، والهوية
+
+نفس البداية لكل الأوضاع: ريل الكلام، البودكاست، المونتاج، والموشن.
+كل المسارات هني من مجلد السكل الرئيسي (`video-ad-editor`).
+
+---
+
+## Step -1 — Model suggestion (every skill, once per session, before anything else)
+
+Editing quality depends on the model and the effort level. Check yourself first, then at most one gentle suggestion. Never a gate.
+
+1. **Check:** you know your own model ID. If effort is visible to you, check it too; if not, treat it as unknown.
+2. **Already good** (Opus 5.5 or a stronger model, and effort `high` or above) → say nothing. Continue.
+3. **Otherwise** write the user two short lines in THEIR language (Arabic by default, Kuwaiti dialect if they use it), then continue the work in the same turn:
+   > «للمونتاج أنصحك بـ**Opus 5.5 أو أقوى** وبجهد **high أو أعلى** — النتيجة تطلع أحسن بوايد. تقدر تغيّرها وتكمل، وأنا ماشي بشغلي.»
+4. **How to switch** (only if they ask or look unsure):
+   - Chat (claude.ai / app): model menu next to the send button → Opus 5.5 or newer → Effort → High or above.
+   - Claude Code (terminal, desktop, mobile Code tab): `/model opus` then `/effort high`.
+5. **Rules:**
+   - ⛔ Never block, never refuse, never wait for an answer. It is a suggestion, not a requirement.
+   - Once per session. If they ignore it or say no, drop it for good.
+   - No cost, speed or minute figures — none were measured.
+   - Do not suggest `ultracode` for a single video: it splits the work across agents and each draws with its own taste. One agent at high effort is better.
+
+## قبل أي تنفيذ — وسّع الطلب
+
+برومبت المستخدم القصير بداية، مو خطة. نفس البرومبت يطلع ضعيف لو نفذته حرفياً.
+1. اقرأ `references/pro-editor.md`. هذا علم المونتاج المشترك.
+2. اكتب لنفسك خطة كاملة قبل الرسم: المواد، الجمل، اللقطات، الحركة، ومصدر كل رقم.
+3. لو الموضوع منتج وفيه تعليق صوتي فوق لقطات، روح لسكل `review-video`.
+4. كل أداة ناقصة دوّرها بالجهاز ونزّلها بعد موافقة بجملة وحدة. لا تختصر الشغل بسبب نقص أداة بصمت.
+5. قل للمستخدم بسطر لو الناقص يأثر على الجودة.
+
+## الخطوة 0 — جهّز بصمت
+
+```bash
+bash scripts/00_setup.sh
+```
+
+- طبع «كل شي جاهز» ← لا تذكر الموضوع.
+- طبع «🆕 فيه إصدار أحدث» ← اسأله: «فيه تحديث للسكل — أحدّثه لك الحين؟»
+  - وافق ← نفّذ السطر اللي طبعه السكربت نفسه (يختلف بين السكل والـplugin).
+- ناقص شي ← قل له بجملة شنو راح تنزّل، خذ موافقته، ثم:
+
+```bash
+bash scripts/00_setup.sh --install
+```
+
+- فشل شي ← قل الحل بجملة بشرية، بلا لصق الخطأ.
+- سطر «الإضافات» فيه «—»؟ هذي اختيارية (تنظيف صوت ذكي، البحث بالمعنى).
+  - اعرضها **مرة وحدة** لما تحتاجها: «أنزّل لك أداة تنظيف الصوت الذكية؟ دقيقتين»
+  - وافق ← `bash scripts/00_setup.sh --extras`
+  - كل وحدة ترجع للطريق القديم لو ناقصة.
+
+جهّز مجلد شغل، وانسخ له `scripts/compose.REFERENCE.html` باسم `compose.html`.
+
+### 🎯 ملف الذوق — اقرأه أول كل شغل (6.5)
+```bash
+python3 scripts/41_review.py taste show
+```
+- قواعد تعلّمناها من ملاحظاته اللي نجحت (`~/.video-ad-editor/taste.md` — برّا البلقن، التحديث ما يمسحه). **طبّقها قبل القواعد العامة.**
+- كل ملاحظة منه تنفّذها وبعدها يعتمد (أو يقول «زين/تمام») ← احفظها قاعدة عامة تنفع الفيديو الجاي:
+  `python3 scripts/41_review.py taste add "<القاعدة>" --tag <كابشن|موشن|صوت|قص|ألوان|عام> --why "<وين صارت>"`
+  - عامة: «المربع على الكتابة نفسها بالمنتج، مو بالعين» — مو «حرّك المربع 20px».
+  - تتعارض مع قديمة؟ `drop <رقم>` القديمة وقله بسطر.
+
+### 💡 نصايح من ريل بنك (6.0)
+- **مقاطع آيفون كثيرة (HLG/HDR) تبي تدمجها بفيديو واحد؟ حوّل كل مقطع SDR أول، بعدين ادمج.**
+  `03_cut_zoom.py` يكشف HDR بالملف الواحد بس — الدمج بـffmpeg قبلها يضيّع وسم HLG فتطلع الألوان باهتة/برتقالية بلا ما ينكشف.
+  ```bash
+  swiftc -O -o scripts/hdr2sdr scripts/hdr2sdr.swift          # مرة وحدة (ماك + أدوات Xcode)
+  mkdir -p sdr; for f in IMG_*.MOV; do scripts/hdr2sdr "$f" "sdr/${f%.*}.mov"; done   # كل مقطع لحاله
+  ```
+  تعرف إنه HDR: `ffprobe -v error -select_streams v:0 -show_entries stream=color_transfer -of csv=p=0 IMG_1.MOV` ← `arib-std-b67` (HLG) أو `smpte2084`.
+- **تنظيف الصوت بكلود كود = DeepFilterNet على الجهاز** (`bash scripts/00_setup.sh --extras` ثم `02b_enhance_audio.sh <work> --local`).
+  أداة أدوبي `media_enhance_speech` تبدأ الشغل بس ما فيه أداة متابعة بكلود كود تجيب الملف النظيف — لا تعتمد عليها هني.
+
+---
+
+## الخطوة 0.5 — صفحة التعارف (أول مرة بس)
+
+```bash
+python3 scripts/00_onboard.py show
+```
+
+النتيجة `{}` = ما فيه اختيارات محفوظة.
+
+**1. طبع اختيارات** ← لا تفتح شي:
+
+```bash
+python3 scripts/00_onboard.py theme <work>
+```
+
+وقل بسطر: «ماشي على إعداداتك: ألوان كذا، كابشن كذا.»
+(الرمز 4 = فيه `theme.json` من قبل — خلّه.)
+
+**2. طبع `{}` وعنده ملف هوية** (`.auto-memory/creator-profile.md`) ← لا تفتحها، امشِ على الخطوة 1.
+
+**3. طبع `{}` وما عنده ملف** ← شغّل الصفحة بالخلفية:
+
+```bash
+python3 scripts/00_onboard.py --work <work>
+```
+
+- قل له: «فتحت لك صفحة صغيرة تختار فيها ذوقك — أو اكتب اللي تبيه وتخطّ. أنتظرك.»
+- طلعت برمز 0 ← `python3 scripts/00_onboard.py theme <work>`
+- فيها `skip:true` ← اشتغل من `note`.
+
+**حالات ثانية:**
+- قال «غيّر إعداداتي» ← افتحها (تنفتح معبّاة)، ثم `theme <work> --force` بموافقته.
+- جلسة بلا متصفح ← لا تفتحها، روح للخطوة 1.
+- كل حقل وين يروح، والهوية من رابط، والصوت المولّد ← `references/onboarding.md`.
+- ⛔ الصوت المولّد بلا افتراضي: هو يختار (فصحى أو لهجة، رجل أو امرأة).
+
+---
+
+## الخطوة 1 — هويته البصرية (ما فيه لون افتراضي)
+
+⛔ **لا تفترض الكريمي والطيني** — ذاك ثيم كلود، مو ثيمه.
+⛔ **لا تغيّر ثيماً سابقاً.** عنده `theme.json` من فيديو قبل؟ استخدمه كما هو.
+تغيير لون أساسي بطلب صريح منه بس.
+
+**0.** انكتب `theme.json` بالخطوة 0.5؟ تخطّ هالخطوة.
+
+**1.** دوّر `.auto-memory/creator-profile.md`.
+لقيته؟ خذ الألوان والخط والحساب، وقل: «راح أمشي بألوانك: كذا وكذا — تمام؟»
+
+**2.** ما فيه؟ **سؤال واحد:**
+«شنو ألوان حسابك؟ عطني لون الخلفية ولون التمييز وشعارك.
+أو رابط حسابك، أو كم صورة يعجبك ستايلها، وأنا أطلّع منها الثيم.»
+
+**أرسل صور مرجعية؟** (حتى لو ما قال «مرجع» — صور ستايل + «أبي جذي»):
+
+```bash
+python3 scripts/00_theme_refs.py <work> صورة1 صورة2 …
+```
+
+- يطلّع ألواناً بتباين مقروء، ويكتب `theme.json` و`refs_palette.jpg`.
+- **اقرأ الورقة بعينك.** بعدها الذوق قرارك من شكل الصور:
+  - الخط: `font`
+  - الكابشن: ناعم ← `shadow` أو `underline` · جريء ← `card` أو `big`
+  - الإيقاع: صور هادية ← `"pace":"calm"`
+- قل له بسطر: «أخذت من صورك: خلفية كذا وتمييز كذا وكابشن كذا — تمام؟»
+- الصور فيها ظل أو إضاءة صفرة؟ `--light` أو `--dark` يثبّت الاتجاه.
+
+**3.** اكتب `<work>/theme.json` وانسخ شعاره `logo.png`:
+
+```json
+{ "bg":"#101828", "ink":"#F5F7FA", "acc":"#F2B33D", "clay":"#C98B18", "mut":"#98A2B3",
+  "font":"Tajawal", "handle":"@his_handle", "logo":"logo.png", "grade": false,
+  "faceAnchor": 0.30, "badgeUntil": 0, "capStyle": "card" }
+```
+
+- كل الرسم يشتق ألوانه من هالقيم. غامق أو فاتح، الاثنين يشتغلون.
+- كتبت الألوان بيدك؟ شغّل هذا حتى ما يطلع نص أبيض على تمييز فاتح:
+
+```bash
+python3 scripts/00_onboard.py onacc <work>
+```
+
+### مفاتيح إضافية بالثيم
+
+| المفتاح | شنو يسوي |
+|---|---|
+| `badgeUntil` | شارة الحساب. مطفية (0) — الاسم بالمنصة وبكرت النهاية. `3` = أول 3 ثوانٍ لو طلبها |
+| `grade` | مطفي دايماً — شوف قاعدة «صفر تعديل لوني» |
+| `capStyle` | ستايل الكابشن ← `references/word-fx.md` |
+| `capStill` | `true` = كابشن بلا حركة: الكرت يدخل ويطلع بالشفافية بس، والكلمة ما تقفز ولا تنبض. تلوين الكلمة المنطوقة والكبسولة يبقى. الافتراضي الحركة ← `references/word-fx.md` |
+| `bar` | `false` = بلا شريط التقدّم. الافتراضي ظاهر. (مو `capStyle: "bar"` — هذاك ستايل كابشن) |
+| `pace` | `"calm"` إيقاع هادي ← `references/explainer-and-pace.md` |
+| `hookZoom` | زوم ناعم على وجهه أول الهوك (ثواني = نهاية الهوك). مطفي افتراضاً |
+| `outro` | كرت الختام `{l1,l2,chips,cta,word,sub}` |
+| `hook` | جملة هوك مكتوبة لريلات البودكاست — يكتبها `22_hook.py apply`، لا تكتبه باليد |
+
+**إعلان فخم هادي** (المستخدم 17 أكتوبر): `"capStill": true` + `"bar": false`، وأي `FX.doorway` يفتح على وجهه ياخذ `zoomB: false` (بلا زوم على الوجه).
+
+**`hookZoom` بالتفصيل:**
+- بعد الخطوة 6 شغّل `python3 scripts/22b_hook_center.py <work>` — يكتب `hookCenter` على وجهه.
+- بدونه ياخذ الوجه من `behind.json`.
+- ومعه ووش خفيف جداً بـ`sfx.json`:
+
+```json
+"soft": [[0, 0.035], [نهاية_الهوك - 0.22, 0.06]]
+```
+
+**⚠️ `outro`:** الافتراضي إعلان السكل نفسه («علّق بكلمة فيديو»).
+أي فيديو مو إعلان للسكل (ريل بودكاست مثلاً) لازم يغيّره.
