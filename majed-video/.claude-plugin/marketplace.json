@@ -1,0 +1,15 @@
+{
+  "name": "majed-video",
+  "owner": {
+    "name": "Majed Alzaabi",
+    "url": "https://github.com/majedphotos"
+  },
+  "description": "Arabic video editing plugin for Claude Code",
+  "plugins": [
+    {
+      "name": "majed-video",
+      "source": "./",
+      "description": "6 skills for Moosa Mohsin TRD Garage: reels · before/after montage · work explainers · podcasts · covers — plates always covered"
+    }
+  ]
+}

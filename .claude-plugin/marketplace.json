@@ -1,0 +1,12 @@
+{
+  "name": "trd-garage-plugins",
+  "owner": { "name": "Moosa Mohsin TRD Garage" },
+  "description": "Plugins customized for Moosa Mohsin TRD Garage (Muscat, Oman)",
+  "plugins": [
+    {
+      "name": "majed-video",
+      "source": "./majed-video",
+      "description": "Arabic video editing (by Majed Alzaabi, MIT) customized for the garage: brand, WhatsApp end card, licence plates always covered"
+    }
+  ]
+}
