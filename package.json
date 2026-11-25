@@ -1,0 +1,25 @@
+{
+  "name": "majedphotos-zernio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piratesandzodiacs-jpg/majedphotos-majed-plugins.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/piratesandzodiacs-jpg/majedphotos-majed-plugins/issues"
+  },
+  "homepage": "https://github.com/piratesandzodiacs-jpg/majedphotos-majed-plugins#readme",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@zernio/node": "^0.2.1822"
+  }
+}
