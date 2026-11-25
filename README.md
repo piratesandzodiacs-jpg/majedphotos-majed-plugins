@@ -1,0 +1,1 @@
+# majedphotos-majed-plugins
