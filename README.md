@@ -16,8 +16,8 @@ Based on [majed-video](https://github.com/majedphotos/video-ad-editor) v6.8.1 by
 
 ### Still needed (ask once, then saved on the device)
 - ~~Garage logo~~ ✅ bundled in `video-ad-editor/brand/` (square `logo.png` for the engine, `logo-wide.png` for covers); colors extracted from it
-- Plate-cover design (PNG) → `~/.video-ad-editor/plate-cover.png`
-- Confirm the colors taken from the logo (black `#0B0B0C`, crimson `#A8261F`, white `#F5F5F5`)
+- ~~Plate-cover design~~ ✅ `video-ad-editor/brand/plate-cover.png`
+- Confirm the colors taken from the plate design and logo (black `#0B0B0C`, gold `#F2C331`, white `#F5F5F5`, crimson `#A8261F`)
 
 ### Install
 Zip the `majed-video/` folder and upload it in claude.ai → Settings → Plugins (replacing the current *majed-video* upload). Or add this repo as a marketplace in Claude Code.

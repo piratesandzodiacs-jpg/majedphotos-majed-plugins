@@ -15,6 +15,7 @@
         - عدة مفاتيح = المربع ينتقل بين المفاتيح بنعومة (خطي).
         - --track     = يتبع اللوحة بين المفاتيح (OpenCV MIL)، ويرجع لمكان المفتاح عند كل مفتاح.
         - --cover     = صورة لوحة الكراج (PNG). بدونها: تغبيش قوي + إطار، ما يُقرا منه شي.
+                        تحافظ على نسبة التصميم وتكبر حول مركز اللوحة حتى تغطيها كاملة (--stretch = مطّ بدل كذا).
         - --from/--to = يغطي بس بين هالثانيتين (الباقي يمشي كما هو).
         الصوت ينسخ كما هو.
 
@@ -112,9 +113,18 @@ def load_cover(path):
     return im
 
 
-def paint(frame, box, cover, pad):
+def paint(frame, box, cover, pad, stretch=False):
     H, W = frame.shape[:2]
     x, y, w, h = box
+    if cover is not None and not stretch:
+        # نحافظ على نسبة التصميم: نكبّر الضلع الناقص (حول نفس المركز) حتى يغطي اللوحة كاملة
+        ar = cover.shape[1] / cover.shape[0]
+        cx, cy = x + w / 2, y + h / 2
+        if w / h < ar:
+            w = h * ar
+        else:
+            h = w / ar
+        x, y = cx - w / 2, cy - h / 2
     px, py = w * pad, h * pad
     x0, y0 = int(max(0, math.floor(x - px))), int(max(0, math.floor(y - py)))
     x1, y1 = int(min(W, math.ceil(x + w + px))), int(min(H, math.ceil(y + h + py)))
@@ -176,7 +186,7 @@ def cmd_cover(a):
                         box = [tb[0], tb[1], box[2], box[3]]
                     else:
                         lost += 1
-            paint(f, box, cover, a.pad)
+            paint(f, box, cover, a.pad, a.stretch)
         enc.stdin.write(f.tobytes())
         n += 1
     enc.stdin.close()
@@ -218,6 +228,7 @@ def main():
     c.add_argument("--key", action="append", required=True)
     c.add_argument("--cover"); c.add_argument("--track", action="store_true")
     c.add_argument("--pad", type=float, default=0.12)
+    c.add_argument("--stretch", action="store_true", help="مطّ التصميم على مقاس المربع بدل ما يحافظ على نسبته")
     c.add_argument("--from", dest="t_from", type=float); c.add_argument("--to", dest="t_to", type=float)
     k = sp.add_parser("check"); k.add_argument("video"); k.add_argument("--every", type=float, default=1.0); k.add_argument("out", nargs="?")
     a = p.parse_args()
