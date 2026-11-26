@@ -403,43 +403,65 @@ def centered(L, im, y):
     L.alpha_composite(im, ((W - im.width) // 2, y))
 
 
+def cbox(c, t, t0, text, y, size, fg, bg, pad=(26, 12), icon=None):
+    """Centered boxed word (wipe-in box, then text rises), optional icon drawn before the text."""
+    wi = word_img(text, size, fg)
+    iw = (wi.height + 14) if icon else 0
+    bw = wi.width + iw + pad[0] * 2
+    x = (W - bw) // 2
+    if t < t0:
+        return
+    bh = wi.height + pad[1] * 2
+    p = eo((t - t0) / 0.18)
+    ImageDraw.Draw(c).rectangle((x, y, x + int(bw * p), y + bh), fill=bg)
+    tp = eo((t - t0 - 0.07) / 0.18)
+    if tp > 0:
+        layer = Image.new('RGBA', (bw, bh), (0, 0, 0, 0))
+        if icon:
+            icon(layer, pad[0], pad[1], wi.height)
+        layer.alpha_composite(wi, (pad[0] + iw, pad[1] + int((1 - tp) * bh * 0.6)))
+        m = Image.new('L', (bw, bh), 0)
+        ImageDraw.Draw(m).rectangle((0, 0, int(bw * p), bh), fill=255)
+        layer.putalpha(ImageChops.multiply(layer.getchannel('A'), m))
+        c.alpha_composite(layer, (x, y))
+
+
 def s_final(t):
-    """One page: painter slow-mo behind a light card; logo, slogan, details and contacts appear one by one."""
+    """Painter slow-mo stays the background; logo and details float on it, one row per beat."""
     lt = t - 17.08
     c = clip_img('6348s2', lt, zoom=lerp(1.0, 1.08, lt / 7.0)).convert('RGBA')
-    x0, y0, x1, y1 = 75, 690, 1005, 1495
-    p = eo((lt - 0.05) / 0.3)
-    if p > 0:
-        hh = int((y1 - y0) * p)
-        c.alpha_composite(Image.new('RGBA', (x1 - x0, hh), CREAM + (242,)), (x0, y1 - hh))
-        if p >= 1:
-            handles(c, (x0, y0, x1, y1), RED, alpha=255)
-    st = sticker()
-    def logo(L):
-        w = 500; im = st.resize((w, int(st.height * w / st.width)), Image.LANCZOS)
-        centered(L, im, 0)
-    def loc(L):
-        txt = word_img('AL MABELA INDUSTRIAL, STREET 1  -  MUSCAT, OMAN', 32, BLACK)
-        x = (W - txt.width - 42) // 2
-        pin(L, x, 2, 28); L.alpha_composite(txt, (x + 42, 4))
-    def wa(L):
-        txt = word_img(PHONE, 52, BLACK); x = (W - txt.width - 68) // 2
-        icon_whatsapp(L, x, 4, 52); L.alpha_composite(txt, (x + 68, 0))
-    def ig(L):
-        txt = word_img(INSTA, 52, BLACK); x = (W - txt.width - 68) // 2
-        icon_insta(L, x, 4, 52); L.alpha_composite(txt, (x + 68, 0))
-    rows = [  # one row per beat
-        (17.18, y0 + 18, 270, logo),
-        (17.76, y0 + 290, 90, lambda L: centered(L, word_img('BACK TO FACTORY NEW', 70, RED), 0)),
-        (18.44, y0 + 385, 64, lambda L: centered(L, word_img('MOOSA BIN MOHSIN AL BALUSHI PROJECTS', 44, BLACK), 0)),
-        (19.04, y0 + 448, 56, lambda L: centered(L, word_img('SAT - THU', 40, RED), 0)),
-        (19.63, y0 + 500, 56, lambda L: centered(L, word_img('7:30 AM - 1:00 PM   |   3:30 PM - 8:00 PM', 40, BLACK), 0)),
-        (20.32, y0 + 566, 48, loc),
-        (20.93, y0 + 626, 66, wa),
-        (21.64, y0 + 700, 66, ig),
-    ]
-    for b, y, h, fn in rows:
-        line_in(c, t, b, fn, y, h)
+    # logo slam + shine, with design handles
+    st = sticker(); w = 560
+    base = st.resize((w, int(st.height * w / st.width)), Image.LANCZOS)
+    t0 = 17.18
+    if t >= t0:
+        q = eo((t - t0) / 0.28)
+        im = base.resize((int(base.width * lerp(1.3, 1, q)), int(base.height * lerp(1.3, 1, q))), Image.BICUBIC)
+        sp = (t - t0 - 0.3) / 0.7
+        if 0 < sp < 1:
+            yy, xx = np.mgrid[0:im.height, 0:im.width].astype(np.float32)
+            pos = (xx + yy * 0.5) / (im.width + im.height * 0.5)
+            g = np.exp(-((pos - lerp(-0.1, 1.1, sp)) / 0.05) ** 2) * 0.75
+            al = np.asarray(im.getchannel('A')).astype(np.float32) / 255
+            im = Image.alpha_composite(im, Image.fromarray(np.dstack([np.full_like(g, 255)] * 3 + [g * al * 255]).astype(np.uint8), 'RGBA'))
+        cy = 860
+        c.alpha_composite(im, (540 - im.width // 2, cy - im.height // 2))
+        if q >= 1:
+            hb = (540 - base.width // 2 - 14, cy - base.height // 2 - 14, 540 + base.width // 2 + 14, cy + base.height // 2 + 14)
+            handles(c, hb, WHITE, alpha=210)
+            mono(c, 'PAINT & BODY  //  MUSCAT', hb[0], hb[1] - 34, 22, WHITE)
+    cbox(c, t, 17.76, 'BACK TO FACTORY NEW', 1030, 66, WHITE, RED)
+    cbox(c, t, 18.44, 'MOOSA BIN MOHSIN AL BALUSHI PROJECTS', 1135, 42, BLACK, WHITE)
+    cbox(c, t, 19.04, 'SAT - THU', 1213, 40, WHITE, RED, pad=(20, 10))
+    cbox(c, t, 19.63, '7:30 AM - 1:00 PM   |   3:30 PM - 8:00 PM', 1287, 40, BLACK, WHITE, pad=(20, 10))
+    cbox(c, t, 20.32, 'AL MABELA INDUSTRIAL, STREET 1  -  MUSCAT, OMAN', 1361, 32, BLACK, WHITE, pad=(18, 10),
+         icon=lambda L, x, y, s: pin(L, x + 4, y, int(s * 0.72)))
+    cbox(c, t, 20.93, PHONE, 1425, 50, BLACK, WHITE, pad=(20, 8),
+         icon=lambda L, x, y, s: icon_whatsapp(L, x, y, s))
+    # thin guide line drawing down the left edge as rows land
+    gp = eo((t - 17.76) / 3.4)
+    if gp > 0:
+        ImageDraw.Draw(c).line((90, 1030, 90, 1030 + int(470 * gp)), fill=WHITE + (170,), width=2)
     return c
 
 
