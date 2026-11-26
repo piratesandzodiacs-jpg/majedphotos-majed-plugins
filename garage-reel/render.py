@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 W, H, FPS = 1080, 1920, 30
-DUR = 24.10
+DUR = 26.75
 EXT = 5.25  # the music repeats from 11.83 at 17.08, so later beats = original + 5.25
 RED = (215, 25, 45); BLACK = (17, 17, 17); CREAM = (241, 238, 230); WHITE = (255, 255, 255)
 ANTON = os.path.join(HERE, 'fonts/Anton-Regular.ttf')
@@ -465,6 +465,34 @@ def s_final(t):
     return c
 
 
+SWITCH = 22.30  # downbeat where "hours" hands over to "contact"
+
+
+@lru_cache(maxsize=8)
+def motion_rgba(name, idx):
+    """Ready-made motion frame on a dark background -> RGBA: dark glass pills, solid bright text."""
+    d = os.path.join(HERE, 'frames', 'm_' + name)
+    n = len(os.listdir(d)); idx = max(1, min(n, idx))
+    a = np.asarray(Image.open(os.path.join(d, '%04d.png' % idx)).convert('RGB')).astype(np.float32)
+    m = a.max(2)
+    glass = np.clip((m - 27) / 14, 0, 1) * 0.70
+    solid = np.clip((m - 60) / 50, 0, 1)
+    al = np.maximum(glass, solid)
+    return Image.fromarray(np.dstack([a, al * 255]).astype(np.uint8), 'RGBA')
+
+
+def s_motion(t):
+    lt = t - 17.08
+    c = clip_img('6348s3', lt, zoom=lerp(1.0, 1.08, lt / 9.7)).convert('RGBA')
+    c.alpha_composite(Image.new('RGBA', (W, H), (0, 0, 0, 120)))  # dim the bright booth so the white text reads
+    if t < SWITCH:
+        c.alpha_composite(motion_rgba('hours', int(lt * FPS) + 1))
+    else:
+        c.alpha_composite(motion_rgba('contact', int((t - SWITCH) * FPS) + 1))
+        flash(c, t, SWITCH, 0.15)
+    return c
+
+
 def hand_wipe(c, t, t_mid=3.34, color=BLACK):
     """Panel sweeps right->left, fully covering at t_mid (stand-in for the hand wipe)."""
     p = (t - (t_mid - 0.22)) / 0.44
@@ -522,7 +550,7 @@ def render(t):
     elif t < 17.08:
         c = s_result(t)
     else:
-        c = s_final(t)
+        c = s_motion(t)
         c = hand_wipe(c, t, 17.08, RED)
     return c.convert('RGB')
 
