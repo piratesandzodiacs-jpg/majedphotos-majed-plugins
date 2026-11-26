@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 W, H, FPS = 1080, 1920, 30
-DUR = 26.75
+DUR = 29.40
 EXT = 5.25  # the music repeats from 11.83 at 17.08, so later beats = original + 5.25
 RED = (215, 25, 45); BLACK = (17, 17, 17); CREAM = (241, 238, 230); WHITE = (255, 255, 255)
 ANTON = os.path.join(HERE, 'fonts/Anton-Regular.ttf')
@@ -465,7 +465,9 @@ def s_final(t):
     return c
 
 
-SWITCH = 22.30  # downbeat where "hours" hands over to "contact"
+BEHIND_END = 19.78  # name-behind-the-painter moment runs 17.08 -> 19.78, then the hours motion
+SWITCH = 25.00      # downbeat where "hours" hands over to "contact"
+PSPEED = 0.785      # painter slow-mo frames stretched over the whole closing
 
 
 @lru_cache(maxsize=8)
@@ -481,12 +483,60 @@ def motion_rgba(name, idx):
     return Image.fromarray(np.dstack([a, al * 255]).astype(np.uint8), 'RGBA')
 
 
-def s_motion(t):
+@lru_cache(maxsize=4)
+def person_mask(idx):
+    d = os.path.join(HERE, 'frames', '6348s3_mask')
+    n = len(os.listdir(d)); idx = max(1, min(n, idx))
+    return Image.open(os.path.join(d, '%04d.png' % idx)).convert('L').resize((1188, 2112), Image.BILINEAR)
+
+
+def painter(lt):
+    """Painter frame + matching person mask, same zoom crop."""
+    z = lerp(1.0, 1.08, lt / 12.3)
+    tl = lt * PSPEED
+    bg = clip_img('6348s3', tl, zoom=z).convert('RGBA')
+    idx = int(tl * FPS) + 1
+    m = person_mask(idx)
+    sw, sh = m.size; cw, ch = sw / z, sh / z
+    m = m.resize((W, H), Image.BILINEAR, box=((sw - cw) / 2, (sh - ch) / 2, (sw + cw) / 2, (sh + ch) / 2))
+    return bg, m.filter(ImageFilter.GaussianBlur(1.2))
+
+
+def s_behind(t):
+    """Garage name rises from behind the painter, one word per beat."""
     lt = t - 17.08
-    c = clip_img('6348s3', lt, zoom=lerp(1.0, 1.08, lt / 9.7)).convert('RGBA')
+    bg, m = painter(lt)
+    person = bg.copy(); person.putalpha(m)
+    c = bg.copy()
+    c.alpha_composite(Image.new('RGBA', (W, H), (0, 0, 0, 120)))
+    words = [('MOOSA', 17.18, 470, WHITE), ('MOHSIN', 17.76, 830, WHITE)]
+    for w, b, cy, col in words:
+        if t < b:
+            continue
+        p = eo((t - b) / 0.45)
+        im = word_img(w, 360, col)
+        if t > BEHIND_END - 0.25:  # lift away before the hours motion lands
+            q = eio((t - (BEHIND_END - 0.25)) / 0.25)
+            cy -= int(q * 260)
+            im = im.copy(); im.putalpha(im.getchannel('A').point(lambda v: int(v * (1 - q))))
+        y = int(cy - im.height / 2 + (1 - p) * 420)
+        c.alpha_composite(im, ((W - im.width) // 2, y))
+    c.alpha_composite(person)  # the painter stays in front of the words
+    if t < BEHIND_END - 0.12:  # front layer: TRD lands on his chest on the third beat
+        cbox(c, t, 18.44, 'TRD', 1090, 210, WHITE, RED, pad=(34, 14))
+    mono(c, 'PAINT & BODY  //  MUSCAT', 90, 200, 26, WHITE, t, 17.3)
+    return c
+
+
+def s_motion(t):
+    if t < BEHIND_END:
+        return s_behind(t)
+    lt = t - 17.08
+    c, _ = painter(lt)
     c.alpha_composite(Image.new('RGBA', (W, H), (0, 0, 0, 120)))  # dim the bright booth so the white text reads
     if t < SWITCH:
-        c.alpha_composite(motion_rgba('hours', int(lt * FPS) + 1))
+        c.alpha_composite(motion_rgba('hours', int((t - BEHIND_END) * FPS) + 1))
+        flash(c, t, BEHIND_END, 0.15)
     else:
         c.alpha_composite(motion_rgba('contact', int((t - SWITCH) * FPS) + 1))
         flash(c, t, SWITCH, 0.15)
