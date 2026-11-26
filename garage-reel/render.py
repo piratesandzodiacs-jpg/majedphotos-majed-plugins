@@ -371,6 +371,78 @@ def s_info(t):
     return c
 
 
+PHONE = '+968 0000 0000'      # placeholder until the real number arrives
+INSTA = '@your_handle'         # placeholder
+
+
+def icon_whatsapp(L, x, y, s=52):
+    d = ImageDraw.Draw(L)
+    d.ellipse((x, y, x + s, y + s), fill=(37, 211, 102))
+    d.polygon([(x + s * 0.08, y + s * 1.0), (x + s * 0.2, y + s * 0.68), (x + s * 0.38, y + s * 0.86)], fill=(37, 211, 102))
+    d.ellipse((x + s * 0.17, y + s * 0.17, x + s * 0.83, y + s * 0.83), outline=WHITE, width=max(2, s // 14))
+    d.ellipse((x + s * 0.36, y + s * 0.36, x + s * 0.64, y + s * 0.64), fill=WHITE)
+
+
+def icon_insta(L, x, y, s=52):
+    g = Image.new('RGBA', (s, s))
+    yy, xx = np.mgrid[0:s, 0:s].astype(np.float32) / s
+    k = np.clip((xx + (1 - yy)) / 2, 0, 1)[..., None]
+    c0 = np.array([254, 218, 117], np.float32); c1 = np.array([214, 41, 118], np.float32); c2 = np.array([79, 91, 213], np.float32)
+    col = np.where(k < 0.5, c0 + (c1 - c0) * (k / 0.5), c1 + (c2 - c1) * ((k - 0.5) / 0.5))
+    g = Image.fromarray(np.dstack([col, np.full((s, s, 1), 255, np.float32)]).astype(np.uint8), 'RGBA')
+    m = Image.new('L', (s, s), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, s - 1, s - 1), radius=s // 4, fill=255)
+    g.putalpha(m)
+    d = ImageDraw.Draw(g); w = max(2, s // 14)
+    d.rounded_rectangle((s * 0.2, s * 0.2, s * 0.8, s * 0.8), radius=s // 6, outline=WHITE, width=w)
+    d.ellipse((s * 0.36, s * 0.36, s * 0.64, s * 0.64), outline=WHITE, width=w)
+    d.ellipse((s * 0.66, s * 0.27, s * 0.73, s * 0.34), fill=WHITE)
+    L.alpha_composite(g, (x, y))
+
+
+def centered(L, im, y):
+    L.alpha_composite(im, ((W - im.width) // 2, y))
+
+
+def s_final(t):
+    """One page: painter slow-mo behind a light card; logo, slogan, details and contacts appear one by one."""
+    lt = t - 17.08
+    c = clip_img('6348s2', lt, zoom=lerp(1.0, 1.08, lt / 7.0)).convert('RGBA')
+    x0, y0, x1, y1 = 75, 690, 1005, 1495
+    p = eo((lt - 0.05) / 0.3)
+    if p > 0:
+        hh = int((y1 - y0) * p)
+        c.alpha_composite(Image.new('RGBA', (x1 - x0, hh), CREAM + (242,)), (x0, y1 - hh))
+        if p >= 1:
+            handles(c, (x0, y0, x1, y1), RED, alpha=255)
+    st = sticker()
+    def logo(L):
+        w = 500; im = st.resize((w, int(st.height * w / st.width)), Image.LANCZOS)
+        centered(L, im, 0)
+    def loc(L):
+        txt = word_img('AL MABELA INDUSTRIAL, STREET 1  -  MUSCAT, OMAN', 32, BLACK)
+        x = (W - txt.width - 42) // 2
+        pin(L, x, 2, 28); L.alpha_composite(txt, (x + 42, 4))
+    def wa(L):
+        txt = word_img(PHONE, 52, BLACK); x = (W - txt.width - 68) // 2
+        icon_whatsapp(L, x, 4, 52); L.alpha_composite(txt, (x + 68, 0))
+    def ig(L):
+        txt = word_img(INSTA, 52, BLACK); x = (W - txt.width - 68) // 2
+        icon_insta(L, x, 4, 52); L.alpha_composite(txt, (x + 68, 0))
+    rows = [  # one row per beat
+        (17.18, y0 + 18, 270, logo),
+        (17.76, y0 + 290, 90, lambda L: centered(L, word_img('BACK TO FACTORY NEW', 70, RED), 0)),
+        (18.44, y0 + 385, 64, lambda L: centered(L, word_img('MOOSA BIN MOHSIN AL BALUSHI PROJECTS', 44, BLACK), 0)),
+        (19.04, y0 + 448, 56, lambda L: centered(L, word_img('SAT - THU', 40, RED), 0)),
+        (19.63, y0 + 500, 56, lambda L: centered(L, word_img('7:30 AM - 1:00 PM   |   3:30 PM - 8:00 PM', 40, BLACK), 0)),
+        (20.32, y0 + 566, 48, loc),
+        (20.93, y0 + 626, 66, wa),
+        (21.64, y0 + 700, 66, ig),
+    ]
+    for b, y, h, fn in rows:
+        line_in(c, t, b, fn, y, h)
+    return c
+
+
 def hand_wipe(c, t, t_mid=3.34, color=BLACK):
     """Panel sweeps right->left, fully covering at t_mid (stand-in for the hand wipe)."""
     p = (t - (t_mid - 0.22)) / 0.44
@@ -427,12 +499,9 @@ def render(t):
         c = whip(t)
     elif t < 17.08:
         c = s_result(t)
-    elif t < 19.63:
-        c = s_end(t)
-        c = hand_wipe(c, t, 19.63, RED)
     else:
-        c = s_info(t)
-        c = hand_wipe(c, t, 19.63, RED)
+        c = s_final(t)
+        c = hand_wipe(c, t, 17.08, RED)
     return c.convert('RGB')
 
 
