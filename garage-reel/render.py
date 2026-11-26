@@ -10,7 +10,8 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 W, H, FPS = 1080, 1920, 30
-DUR = 18.94
+DUR = 24.10
+EXT = 5.25  # the music repeats from 11.83 at 17.08, so later beats = original + 5.25
 RED = (215, 25, 45); BLACK = (17, 17, 17); CREAM = (241, 238, 230); WHITE = (255, 255, 255)
 ANTON = os.path.join(HERE, 'fonts/Anton-Regular.ttf')
 MONO = '/usr/share/fonts/truetype/jetbrains-mono/JetBrainsMono-Medium.ttf'
@@ -310,6 +311,66 @@ def s_end(t):
     return c
 
 
+def pin(c, x, y, s=34, color=RED):
+    d = ImageDraw.Draw(c)
+    d.ellipse((x, y, x + s, y + s), fill=color)
+    d.polygon([(x + s * 0.12, y + s * 0.68), (x + s * 0.88, y + s * 0.68), (x + s / 2, y + s * 1.45)], fill=color)
+    d.ellipse((x + s * 0.32, y + s * 0.32, x + s * 0.68, y + s * 0.68), fill=BLACK)
+
+
+def line_in(c, t, t0, draw_fn, y, h):
+    """Reveal a row with a left-to-right wipe + small rise."""
+    if t < t0:
+        return
+    p = eo((t - t0) / 0.22)
+    layer = Image.new('RGBA', (W, h), (0, 0, 0, 0))
+    draw_fn(layer)
+    m = Image.new('L', (W, h), 0)
+    ImageDraw.Draw(m).rectangle((0, 0, int(W * p), h), fill=255)
+    layer.putalpha(ImageChops.multiply(layer.getchannel('A'), m))
+    c.alpha_composite(layer, (0, y + int((1 - p) * 24)))
+
+
+def s_info(t):
+    lt = t - 19.63
+    c = clip_img('6348s', lt, zoom=lerp(1.0, 1.07, lt / 4.5)).convert('RGBA')
+    # card
+    x0, y0, x1, y1 = 70, 860, 950, 1490
+    p = eo(lt / 0.25)
+    if p > 0:
+        cx1 = int(lerp(x0, x1, p))
+        c.alpha_composite(Image.new('RGBA', (cx1 - x0, y1 - y0), BLACK + (235,)), (x0, y0))
+        if p >= 1:
+            handles(c, (x0, y0, x1, y1), WHITE, alpha=230)
+    X = 110
+    line_in(c, t, 19.70, lambda L: (mono(L, 'PAINT & BODY  //  MUSCAT', X, 0, 24, (200, 200, 200)),), y0 + 34, 40)
+    line_in(c, t, 19.80, lambda L: L.alpha_composite(word_img('MOOSA BIN MOHSIN', 92, WHITE), (X, 0)), y0 + 84, 120)
+    line_in(c, t, 20.10, lambda L: L.alpha_composite(word_img('AL BALUSHI PROJECTS', 92, RED), (X, 0)), y0 + 196, 120)
+    def hrs(L):
+        L.alpha_composite(word_img('SAT - THU', 58, RED), (X, 0))
+    line_in(c, t, 20.32, hrs, y0 + 330, 80)
+    def morning(L):
+        mono(L, 'MORNING', X, 18, 24, (200, 200, 200))
+        L.alpha_composite(word_img('7:30 AM - 1:00 PM', 58, WHITE), (X + 170, 0))
+    def evening(L):
+        mono(L, 'EVENING', X, 18, 24, (200, 200, 200))
+        L.alpha_composite(word_img('3:30 PM - 8:00 PM', 58, WHITE), (X + 170, 0))
+    line_in(c, t, 20.93, morning, y0 + 410, 80)
+    line_in(c, t, 21.30, evening, y0 + 486, 80)
+    def loc(L):
+        pin(L, X, 4, 30)
+        L.alpha_composite(word_img('AL MABELA INDUSTRIAL, STREET 1  -  MUSCAT, OMAN', 34, WHITE), (X + 46, 6))
+    line_in(c, t, 21.64, loc, y0 + 572, 50)
+    # small sticker top-right on the last downbeat
+    if t >= 22.33:
+        st = sticker(); w = 300
+        im = st.resize((w, int(st.height * w / st.width)), Image.LANCZOS)
+        q = eo((t - 22.33) / 0.25)
+        im = im.resize((max(1, int(im.width * lerp(1.3, 1, q))), max(1, int(im.height * lerp(1.3, 1, q)))))
+        c.alpha_composite(im, (940 - im.width, 170))
+    return c
+
+
 def hand_wipe(c, t, t_mid=3.34, color=BLACK):
     """Panel sweeps right->left, fully covering at t_mid (stand-in for the hand wipe)."""
     p = (t - (t_mid - 0.22)) / 0.44
@@ -366,8 +427,12 @@ def render(t):
         c = whip(t)
     elif t < 17.08:
         c = s_result(t)
-    else:
+    elif t < 19.63:
         c = s_end(t)
+        c = hand_wipe(c, t, 19.63, RED)
+    else:
+        c = s_info(t)
+        c = hand_wipe(c, t, 19.63, RED)
     return c.convert('RGB')
 
 
