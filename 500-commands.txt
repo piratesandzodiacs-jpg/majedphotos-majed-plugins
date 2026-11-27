@@ -1,0 +1,544 @@
+# 500 Image Commands — majedphotos
+# Format: /command | description to apply to the generated image
+# Usage: start a message with one or more commands, then the topic.
+#   Example: /portrait /goldenhour /kodak a falcon handler in the desert
+# Commands combine freely. Later commands refine earlier ones; on conflict, the last one wins.
+# Any Arabic text in an image must be correct, right to left, with properly joined letters.
+
+## 1. SHOT TYPE & FRAMING
+/portrait | Head-and-shoulders portrait, subject sharp, background softly separated
+/closeup | Tight close-up filling the frame with the face or key detail
+/extremecloseup | Extreme close-up on a single detail: an eye, lips, a texture
+/macro | True macro, 1:1 magnification, microscopic surface detail, razor-thin focus
+/medium | Medium shot from the waist up, natural working distance
+/fullbody | Full body visible head to toe with a little breathing room
+/wide | Wide shot showing the subject within its environment
+/extremewide | Extreme wide establishing shot, subject tiny in a vast scene
+/establishing | Cinematic establishing shot that sets location and scale
+/twoshot | Two subjects sharing the frame in conversation or interaction
+/overshoulder | Over-the-shoulder shot, foreground shoulder blurred, focus on the other subject
+/pov | First-person point of view, hands or body edges visible at frame edge
+/headshot | Professional headshot, clean background, flattering soft light
+/profile | Side profile silhouette-friendly framing of the subject
+/backview | Subject seen from behind, facing into the scene
+/group | Group shot, everyone visible and evenly lit
+/crowd | Dense crowd scene with layered depth
+/environmental | Environmental portrait: subject in their workplace or home telling a story
+/detail | Detail shot emphasizing craftsmanship and texture
+/negativespace | Subject small with large empty negative space for text
+/centered | Perfectly centered subject, symmetrical framing
+/framewithin | Subject framed by a doorway, window, arch or foliage
+/silhouette | Subject as a dark silhouette against a bright background
+/reflection | Composition built around a reflection in water, glass or mirror
+/shadowplay | Strong cast shadows forming part of the subject or story
+
+## 2. CAMERA ANGLE & MOVEMENT FEEL
+/eyelevel | Neutral eye-level camera angle
+/lowangle | Low angle looking up, subject feels powerful and heroic
+/highangle | High angle looking down, subject feels small or vulnerable
+/birdseye | Straight-down top view from directly above
+/flatlay | Overhead flat lay, objects arranged neatly on a surface
+/wormseye | Extreme low angle from ground level looking up
+/dutch | Dutch tilt, camera rolled for tension and unease
+/aerial | Aerial view from a high altitude
+/drone | Drone shot, 60–120 m altitude, sweeping perspective
+/threequarter | Three-quarter angle, the most flattering classic portrait turn
+/frontal | Straight-on frontal view, confrontational and direct
+/isometric | Isometric 30-degree view, no perspective convergence
+/motionpan | Panning shot: sharp subject, horizontally streaked background
+/dollyzoom | Vertigo dolly-zoom distortion, background stretching
+/handheld | Slight handheld imperfection, documentary realism
+/gimbal | Smooth stabilized gimbal look, floating perspective
+
+## 3. LENS & FOCAL LENGTH
+/fisheye | 8–15 mm fisheye, strong barrel distortion, circular feel
+/ultrawide | 14 mm ultra-wide, exaggerated depth and leading lines
+/24mm | 24 mm wide lens, dramatic environmental perspective
+/35mm | 35 mm lens, natural storytelling field of view
+/50mm | 50 mm standard lens, human-eye perspective
+/85mm | 85 mm portrait lens, flattering compression, creamy bokeh
+/105mm | 105 mm lens, tight portraits and macro-friendly compression
+/135mm | 135 mm lens, strong compression, dreamy background melt
+/200mm | 200 mm telephoto, stacked layers, isolated subject
+/600mm | 600 mm super-telephoto, wildlife and sports compression
+/tiltshift | Tilt-shift miniature effect, narrow band of focus
+/anamorphic | Anamorphic lens: oval bokeh, horizontal blue flares, 2.39:1 feel
+/petzval | Petzval swirly bokeh, vintage portrait rendering
+/helios | Helios 44-2 swirl bokeh, Soviet vintage character
+/pinhole | Pinhole camera softness, infinite soft focus, vignetting
+/softfocus | Soft-focus diffusion lens, glowing highlights
+/bokeh | Very shallow depth of field, large round bokeh balls
+/deepfocus | Everything sharp from foreground to infinity, f/16
+/f1.2 | Aperture f/1.2, wafer-thin focus plane
+/f8 | Aperture f/8, crisp and sharp throughout
+/vintagelens | Old uncoated lens: low contrast, veiling flare, warm glow
+
+## 4. CAMERA BODY & SENSOR LOOK
+/leica | Leica M rendering: micro-contrast, rich blacks, classic street look
+/hasselblad | Hasselblad medium format: huge tonal range, smooth gradation
+/phaseone | Phase One IQ4 150MP: extreme resolution and detail
+/fujifilm | Fujifilm color science, pleasing skin and soft greens
+/sony | Sony Alpha clean modern look, high dynamic range
+/arri | ARRI Alexa cinema look, smooth highlight roll-off, filmic skin
+/red | RED cinema camera, ultra-sharp 8K detail
+/blackmagic | Blackmagic cinema look, flat-to-graded film feel
+/iphone | Modern smartphone photo, computational HDR, deep focus
+/polaroid | Polaroid instant photo with white frame, soft faded color
+/instax | Instax mini instant print, bright, slightly overexposed
+/disposable | Disposable camera with harsh flash, grain, date stamp feel
+/lomo | Lomography LC-A: vignette, saturated shifted colors
+/holga | Holga toy camera: light leaks, heavy vignette, soft corners
+/largeformat | 4x5 large format view camera, monumental detail and movements
+/daguerreotype | Daguerreotype, mirror-like silver plate, 1840s
+/tintype | Wet plate tintype, dark edges, silvery tones, 1860s
+/cctv | CCTV security footage, low-res, timestamp overlay, high angle
+/thermal | Thermal imaging camera palette, heat mapped in false color
+/infrared | Infrared photography: white foliage, dark skies
+/nightvision | Night-vision green phosphor image with noise
+
+## 5. FILM STOCK
+/kodak | Kodak Portra 400: warm natural skin, soft pastel highlights, fine grain
+/portra160 | Kodak Portra 160: low contrast, delicate skin, studio-fine grain
+/portra800 | Kodak Portra 800: warm, punchy, slightly grainier low-light film
+/ektar | Kodak Ektar 100: vivid saturated landscapes, ultra-fine grain
+/gold | Kodak Gold 200: nostalgic golden warmth, consumer film charm
+/ultramax | Kodak UltraMax 400: bright everyday color, visible grain
+/kodachrome | Kodachrome 64: deep reds, rich blues, mid-century magazine color
+/ektachrome | Ektachrome E100 slide film: clean, cool, vivid
+/trix | Kodak Tri-X 400 black and white: punchy contrast, classic grain
+/tmax | Kodak T-Max 100: smooth, fine-grain black and white
+/vision3 | Kodak Vision3 500T motion picture film, tungsten cinema look
+/cinestill | CineStill 800T: red halation around highlights, teal night tones
+/fujipro | Fuji Pro 400H: airy pastels, minty greens, wedding film look
+/superia | Fuji Superia 400: green-shifted shadows, everyday snapshot
+/velvia | Fuji Velvia 50: hyper-saturated landscape slide film
+/provia | Fuji Provia 100F: accurate, clean slide film
+/acros | Fuji Acros 100: silky black and white, deep tonality
+/ilford | Ilford HP5 Plus: gritty black and white, wide latitude
+/delta3200 | Ilford Delta 3200: heavy grain, moody low-light black and white
+/lomochrome | LomoChrome Purple: foliage turned purple, surreal color shift
+/redscale | Redscale film: orange-red monochrome, burnt tones
+/expired | Expired film: color shifts, fog, unpredictable faded tones
+/crossprocess | Cross-processed slide film: high contrast, yellow-green shift
+/technicolor | Three-strip Technicolor: saturated primaries, 1950s Hollywood
+/super8 | Super 8 home movie frame, heavy grain, warm fade, gate weave
+
+## 6. LIGHTING
+/softlight | Large soft diffused light, gentle shadows
+/hardlight | Hard direct light, crisp defined shadows
+/rembrandt | Rembrandt lighting, triangle of light on the shadow cheek
+/butterfly | Butterfly/paramount lighting from above, glamour shadow under nose
+/split | Split lighting, half the face lit and half in shadow
+/loop | Loop lighting, small nose shadow, classic flattering portrait
+/clamshell | Clamshell beauty light, key above and fill below
+/rimlight | Strong rim light outlining the subject edges
+/backlight | Backlit subject, glowing hair and edges
+/chiaroscuro | Chiaroscuro: extreme contrast of light and darkness
+/lowkey | Low-key lighting, mostly dark frame, selective highlights
+/highkey | High-key lighting, bright, airy, minimal shadows
+/studio | Clean professional studio lighting setup
+/softbox | Softbox key light, soft rectangular catchlights
+/beautydish | Beauty dish light, crisp yet soft fashion look
+/ringlight | Ring light, even frontal light, circular catchlights
+/flash | Direct on-camera flash, hard shadows, snapshot party look
+/strobe | High-speed strobe freezing motion
+/neon | Neon light glow casting saturated colored light
+/rgb | Mixed RGB gel lighting, magenta and cyan contrast
+/gels | Colored gel lighting, bold complementary hues
+/practical | Lit only by practical lamps visible in the scene
+/candlelight | Warm flickering candlelight, deep shadows
+/firelight | Orange firelight from a campfire or fireplace
+/moonlight | Cool blue moonlight, quiet night ambience
+/streetlight | Sodium-vapor streetlight, orange urban night
+/windowlight | Soft natural window light from one side
+/godrays | Volumetric god rays streaming through haze
+/volumetric | Volumetric light beams in smoke or fog
+/caustics | Water caustic light patterns dancing on surfaces
+/dappled | Dappled light filtering through leaves
+/gobo | Gobo projected patterns: blinds, leaves, shapes
+/bioluminescent | Bioluminescent glow from organisms in darkness
+/spotlight | Single theatrical spotlight, dark surroundings
+/glow | Soft emissive glow and bloom around light sources
+
+## 7. TIME OF DAY & WEATHER
+/goldenhour | Golden hour: low warm sun, long soft shadows, amber glow
+/bluehour | Blue hour: deep blue sky, city lights just switching on
+/sunrise | Sunrise, pastel pink and orange sky
+/sunset | Sunset, fiery orange and red sky
+/dawn | Pre-dawn twilight, cool and quiet
+/dusk | Dusk, fading warm-to-cool gradient
+/noon | Harsh midday sun, short hard shadows
+/overcast | Overcast sky, soft shadowless light
+/night | Night scene, dark sky, artificial lights
+/astro | Astrophotography: Milky Way, star-filled sky
+/startrails | Long-exposure circular star trails
+/aurora | Northern lights dancing green and purple
+/rain | Falling rain, wet glistening surfaces
+/afterrain | After rain: puddles, reflections, fresh air
+/storm | Dramatic storm clouds, ominous sky
+/lightning | Lightning bolt striking across the sky
+/fog | Thick fog, depth fading into white
+/mist | Light morning mist, soft atmospheric layers
+/snow | Snowfall, cold white landscape
+/sandstorm | Desert sandstorm, orange haze, low visibility
+/haze | Hazy heat atmosphere, softened distance
+/heatwave | Heat shimmer, mirage distortion over the ground
+/rainbow | Rainbow arching across the sky
+/clouds | Dramatic towering cumulus clouds
+/autumn | Autumn season, orange and red leaves
+/spring | Spring season, blossoms and fresh greens
+
+## 8. COLOR GRADE & PALETTE
+/tealorange | Teal-and-orange blockbuster color grade
+/bleachbypass | Bleach bypass: desaturated, high contrast, silvery
+/blackwhite | Rich black and white with full tonal range
+/sepia | Warm sepia-toned vintage print
+/duotone | Two-color duotone treatment
+/pastel | Soft pastel palette, light and dreamy
+/vibrant | Highly saturated vibrant colors
+/muted | Muted desaturated palette, understated
+/earthy | Earthy palette: browns, ochres, olives
+/warm | Overall warm color temperature
+/cool | Overall cool color temperature
+/moody | Moody grade: crushed shadows, desaturated, dark
+/matte | Matte look with lifted blacks, faded film feel
+/faded | Faded vintage colors, low contrast
+/filmic | Filmic grade: gentle S-curve, natural roll-off
+/hdr | HDR look, extended dynamic range, detailed shadows and highlights
+/neonnoir | Neon noir palette: magenta, cyan, deep blacks
+/cyberpunkgrade | Cyberpunk grade: pink and electric blue
+/greenmatrix | Green-tinted digital matrix grade
+/goldblack | Luxury gold-and-black palette
+/whitegold | Clean white and gold elegant palette
+/redaccent | Mostly desaturated image with a single red accent
+/colorsplash | Black and white with one selective color kept
+/complementary | Strong complementary color contrast
+/monochromaticblue | Everything in shades of blue
+/candy | Candy-colored sweet bright palette
+/sunbleached | Sun-bleached washed-out summer colors
+/nordic | Nordic palette: cool greys, whites, muted blues
+/desertpalette | Desert palette: sand, terracotta, sky blue
+/autumnpalette | Autumn palette: rust, mustard, burgundy
+/infraredpalette | Aerochrome-style false color, red foliage
+
+## 9. PHOTOGRAPHY GENRE
+/fashion | High-fashion editorial photography
+/editorial | Magazine editorial look, styled and storytelling
+/vogue | Luxury fashion magazine cover aesthetic
+/beauty | Beauty photography: flawless skin, makeup detail
+/product | Clean commercial product photography
+/food | Appetizing food photography, styled plating
+/drink | Beverage photography, condensation, backlit liquid
+/jewelry | Jewelry photography, sparkling highlights, macro detail
+/watch | Luxury watch advertising shot, reflections controlled
+/automotive | Automotive advertising photography, sleek reflections
+/carshoot | Car photoshoot with rolling shot motion and glossy paint
+/architecture | Architectural photography, corrected verticals
+/interior | Interior design photography, balanced natural light
+/realestate | Real estate photography, bright wide rooms
+/landscape | Landscape photography, epic scenery
+/seascape | Seascape with long-exposure smooth water
+/cityscape | Cityscape skyline photography
+/street | Candid street photography, decisive moment
+/documentary | Documentary photojournalism, authentic and raw
+/photojournalism | News photojournalism, gritty and immediate
+/wildlife | Wildlife photography in natural habitat
+/pets | Pet portrait photography, expressive eyes
+/sports | Sports action photography, frozen peak moment
+/wedding | Romantic wedding photography
+/newborn | Newborn photography, soft blankets, gentle light
+/family | Warm family portrait session
+/maternity | Maternity portrait, elegant and soft
+/boudoir | Tasteful elegant boudoir-style portrait, fully covered, soft light
+/fineart | Fine art photography, conceptual and gallery-ready
+/conceptual | Conceptual photography with a symbolic idea
+/surrealphoto | Surreal photo manipulation, impossible but photoreal
+/stilllife | Classical still-life arrangement
+/longexposure | Long exposure: light trails, smooth motion
+/lightpainting | Light painting with glowing trails in darkness
+/underwater | Underwater photography, blue depth, light rays
+/aerialphoto | Aerial photography of patterns from above
+/event | Event photography, energetic and candid
+/concert | Concert photography, stage lights and haze
+
+## 10. ART STYLE & MEDIUM
+/photoreal | Photorealistic, indistinguishable from a real photograph
+/hyperreal | Hyperrealistic with exaggerated perfect detail
+/cinematic | Cinematic film still, dramatic lighting and grade
+/render3d | High-quality 3D render, physically based materials
+/octane | Octane render look, glossy, ray-traced
+/unreal | Unreal Engine real-time render, game cinematic
+/claymation | Claymation style, handmade clay figures, fingerprints
+/stopmotion | Stop-motion puppet animation look
+/lowpoly | Low-poly 3D with flat faceted shading
+/voxel | Voxel art made of tiny cubes
+/isometricart | Isometric illustration, clean diorama
+/miniature | Miniature diorama, tiny handcrafted world
+/papercraft | Layered paper-cut craft, soft shadows between layers
+/origami | Folded origami paper style
+/watercolor | Watercolor painting, soft bleeding pigments
+/oilpainting | Oil painting with visible brushstrokes and impasto
+/acrylic | Acrylic painting, bold opaque color
+/gouache | Gouache painting, matte flat color areas
+/pastelart | Soft chalk pastel artwork
+/charcoal | Charcoal drawing, smudged dramatic tones
+/pencil | Graphite pencil sketch, fine hatching
+/ink | Ink drawing, crisp linework and washes
+/sketch | Loose gestural concept sketch
+/blueprint | Technical blueprint, white lines on blue
+/vector | Flat vector illustration, clean shapes
+/flatdesign | Flat design, no gradients, bold simple forms
+/anime | Anime style, cel shading, expressive eyes
+/manga | Black and white manga panel with screentones
+/comic | Western comic book style, inks and halftone
+/cartoon | Cartoon style, playful exaggerated shapes
+/pixar | Family 3D animated film look, soft lighting, appealing characters
+/pixelart | Retro pixel art, limited palette
+/stainedglass | Stained glass window with lead lines
+/mosaic | Tile mosaic artwork
+/embroidery | Embroidered thread artwork on fabric
+/woodcut | Woodcut print, bold carved lines
+/linocut | Linocut print, rough relief texture
+/etching | Copperplate etching, fine engraved lines
+/screenprint | Screen print, flat layered inks, slight misregistration
+/graffiti | Graffiti street art on a wall
+/tattoo | Tattoo flash artwork style
+/neonsign | Rendered as a glowing neon sign
+/hologram | Translucent holographic projection
+
+## 11. ART MOVEMENT & ERA
+/renaissance | Renaissance painting, balanced composition, sfumato
+/baroque | Baroque drama, rich color, theatrical light
+/rococo | Rococo: pastel, ornate, playful elegance
+/impressionism | Impressionist painting, broken brushstrokes, light
+/postimpressionism | Post-impressionist bold color and expressive strokes
+/pointillism | Pointillism made of tiny dots of color
+/expressionism | Expressionist distortion and emotional color
+/cubism | Cubist fragmented geometric planes
+/surrealism | Surrealist dreamlike impossible imagery
+/artnouveau | Art Nouveau organic curves and ornamental frames
+/artdeco | Art Deco geometry, gold lines, 1920s glamour
+/bauhaus | Bauhaus primary colors and geometric forms
+/popart | Pop art: Ben-Day dots, bold flat colors
+/minimalism | Minimalist art, few elements, lots of space
+/brutalism | Brutalist raw concrete aesthetic
+/constructivism | Russian constructivist poster, red-black diagonals
+/ukiyoe | Ukiyo-e Japanese woodblock print
+/sumie | Sumi-e ink wash painting, brush economy
+/persianminiature | Persian miniature painting, gold detail, flat perspective
+/islamicart | Islamic geometric art, arabesques and tessellations
+/arabesque | Arabesque ornamental vine patterns
+/byzantine | Byzantine icon style, gold leaf background
+/medieval | Medieval illuminated manuscript
+/victorian | Victorian era aesthetic
+/vaporwave | Vaporwave: pink-purple, Greek busts, 90s computer graphics
+/synthwave | Synthwave: neon grid, sunset, 80s retro-future
+/y2k | Y2K aesthetic: chrome, glossy blobs, early-2000s tech
+/retro70s | 1970s retro: warm browns, oranges, soft focus
+/retro80s | 1980s look: bold color, airbrush, neon
+/retro90s | 1990s look: grunge, film snapshot, bright plastics
+
+## 12. GENRE & WORLD LOOK
+/cyberpunk | Cyberpunk city: neon, rain, holograms, high tech low life
+/steampunk | Steampunk: brass, gears, Victorian machinery
+/solarpunk | Solarpunk: green sustainable future, plants and solar glass
+/dieselpunk | Dieselpunk: 1940s industrial machinery and grit
+/biopunk | Biopunk: organic technology, bioengineered textures
+/postapocalyptic | Post-apocalyptic ruins, dust, survival
+/scifi | Clean science-fiction futurism
+/spaceopera | Epic space opera, starships and nebulae
+/fantasy | High fantasy world, magical and epic
+/darkfantasy | Dark fantasy, gothic, ominous magic
+/fairytale | Storybook fairytale illustration
+/mythology | Mythological scene, legendary grandeur
+/horror | Horror atmosphere, dread and darkness
+/gothic | Gothic architecture and dark romance
+/noir | Film noir: black and white, venetian-blind shadows, smoke
+/western | Western frontier, dusty warm tones
+/wuxia | Wuxia martial-arts epic, flowing robes, misty mountains
+/samurai | Feudal Japan samurai atmosphere
+/viking | Viking Norse world, fjords, furs, longships
+/arabiannights | Arabian Nights fantasy: lanterns, palaces, flying carpets
+/ancientegypt | Ancient Egypt: temples, gold, hieroglyphs
+/ancientrome | Ancient Rome: marble, columns, legions
+/underwaterworld | Fantastical underwater world
+/dreamcore | Dreamcore: liminal, nostalgic, eerie dreams
+/liminal | Liminal space: empty, uncanny transitional places
+
+## 13. COMPOSITION
+/ruleofthirds | Subject on rule-of-thirds intersections
+/goldenratio | Composition following the golden spiral
+/symmetry | Perfect bilateral symmetry
+/leadinglines | Strong leading lines guiding to the subject
+/diagonal | Dynamic diagonal composition
+/triangle | Triangular composition for stability
+/layers | Foreground, midground, background layering
+/foreground | Strong out-of-focus foreground element
+/pattern | Repeating pattern filling the frame
+/breakpattern | Repeating pattern broken by one subject
+/minimal | Minimal composition, single subject, clean space
+/busy | Rich busy composition full of detail
+/fillframe | Subject fills the entire frame
+/horizonlow | Low horizon, sky dominates
+/horizonhigh | High horizon, ground dominates
+/vanishingpoint | One-point perspective to a central vanishing point
+/scale | Human figure included to show massive scale
+/juxtaposition | Contrasting elements placed side by side
+/depth | Strong sense of depth and dimensionality
+/flat | Flattened graphic composition, no depth
+
+## 14. MOOD & EMOTION
+/dramatic | Dramatic, intense and powerful mood
+/epic | Epic grand scale, awe-inspiring
+/serene | Serene, calm and peaceful
+/dreamy | Dreamy, soft and ethereal
+/romantic | Romantic, warm and intimate
+/melancholic | Melancholic, wistful and quiet sadness
+/nostalgic | Nostalgic, warm memory feeling
+/mysterious | Mysterious, hidden and intriguing
+/eerie | Eerie and unsettling
+/joyful | Joyful, bright and happy
+/playful | Playful, fun and whimsical
+/energetic | Energetic, dynamic movement
+/luxury | Luxurious, premium and opulent
+/elegant | Elegant, refined and graceful
+/rugged | Rugged, tough and weathered
+/cozy | Cozy, warm, comfortable atmosphere
+/lonely | Lonely, isolated single figure
+/hopeful | Hopeful, uplifting light breaking through
+/tense | Tense, suspenseful atmosphere
+/powerful | Powerful, commanding presence
+/innocent | Innocent and pure
+/spiritual | Spiritual, transcendent and sacred
+/rebellious | Rebellious, edgy attitude
+
+## 15. POST-PROCESSING & TEXTURE
+/grain | Fine natural film grain
+/heavygrain | Heavy visible grain
+/vignette | Dark vignette around the edges
+/halation | Red-orange halation glow around highlights
+/bloom | Highlight bloom and glow
+/lensflare | Natural lens flare from the light source
+/lightleak | Film light leaks in warm colors
+/dust | Dust and scratches on the film
+/chromatic | Chromatic aberration fringing at edges
+/glitch | Digital glitch: pixel shifts, RGB split
+/vhs | VHS tape artifacts, tracking lines
+/halftone | Halftone dot print texture
+/paper | Printed on textured paper
+/canvas | Canvas texture showing through paint
+/motionblur | Motion blur conveying speed
+/doubleexposure | Double exposure blending two images
+/prism | Prism effect, rainbow refractions
+/kaleidoscope | Kaleidoscopic mirrored pattern
+/sharp | Ultra sharp, crisp micro-detail
+/softglow | Orton-effect soft glow
+/hdrtone | Tone-mapped HDR processing
+/cleanretouch | Clean high-end retouching, natural skin texture kept
+/frequency | Skin frequency-separation retouch, polished but real
+/smoke | Atmospheric smoke drifting through the scene
+
+## 16. AI MODELS (generation engines — choose the look of a specific model)
+/midjourney | Midjourney aesthetic: painterly richness, high artistic polish
+/mjv7 | Midjourney v7 look: refined realism, coherent detail
+/niji | Niji anime engine look: vivid anime illustration
+/flux | FLUX look: photoreal, accurate text, natural skin
+/fluxpro | FLUX Pro: maximum prompt fidelity and detail
+/fluxkontext | FLUX Kontext: image editing that keeps the subject consistent
+/sdxl | Stable Diffusion XL look: versatile, stylized realism
+/sd35 | Stable Diffusion 3.5 look: strong composition and typography
+/dalle | DALL·E look: clean, literal, illustrative interpretation
+/gptimage | GPT Image look: precise instruction following, clean text rendering
+/imagen | Google Imagen look: crisp photoreal with natural lighting
+/nanobanana | Gemini image editing look: consistent characters across edits
+/ideogram | Ideogram look: excellent typography and poster layouts
+/recraft | Recraft look: brand-ready vector and design assets
+/leonardo | Leonardo look: game-art and concept-art polish
+/firefly | Adobe Firefly look: commercially safe stock-photo polish
+/seedream | Seedream look: high-resolution photoreal with rich color
+/higgsfieldsoul | Higgsfield Soul look: fashion-grade realistic people
+/kling | Kling video look: realistic motion, cinematic camera moves
+/veo | Veo video look: cinematic realism with native sound feel
+/sora | Sora video look: long coherent cinematic shots
+/runway | Runway Gen video look: stylized cinematic motion
+/luma | Luma Dream Machine look: smooth physical motion
+/hailuo | Hailuo/MiniMax video look: expressive dynamic motion
+/seedance | Seedance video look: multi-shot storytelling motion
+
+## 17. ASPECT RATIO & FORMAT
+/square | 1:1 square, Instagram feed
+/portrait45 | 4:5 portrait, Instagram feed optimal
+/story | 9:16 vertical, Stories, Reels, TikTok
+/landscape169 | 16:9 widescreen, YouTube and presentations
+/cinemascope | 2.39:1 cinemascope letterbox
+/ultrawide21 | 21:9 ultrawide banner
+/a4 | A4 print portrait layout
+/poster | Poster layout with space for title text
+/cover | Magazine cover layout, masthead space
+/thumbnail | YouTube thumbnail: bold, high contrast, readable at small size
+/banner | Wide web banner composition
+/wallpaper | Phone wallpaper, clean area for clock and icons
+/sticker | Die-cut sticker with white border, transparent feel
+/logo | Logo mark, simple, scalable, centered
+/carousel | Seamless carousel panorama split into slides
+
+## 18. SAUDI, GULF & ARABIC
+/saudi | Saudi setting and identity, authentic local details
+/najdi | Najdi mud-brick architecture, triangular windows, earthy tones
+/hijazi | Hijazi heritage: rawasheen wooden balconies, coral-stone houses
+/diriyah | Diriyah At-Turaif mud-brick heritage at golden light
+/alula | AlUla sandstone rock formations and Hegra tombs
+/riyadh | Riyadh skyline with modern towers
+/jeddah | Jeddah corniche and historic Al-Balad
+/desert | Arabian desert dunes, red sand, endless horizon
+/oasis | Desert oasis with palm trees and water
+/bedouin | Bedouin tent, majlis carpets, campfire, coffee
+/falcon | Falconry: hooded falcon on a leather glove
+/camel | Camels in the desert, caravan silhouettes
+/arabiccoffee | Saudi coffee: dallah, finjan cups, dates
+/majlis | Traditional majlis interior: floor cushions, carpets, incense
+/thobe | Men in white thobe and shemagh/ghutra
+/abaya | Elegant modern abaya fashion
+/sadu | Al Sadu woven geometric Bedouin pattern
+/calligraphy | Arabic calligraphy, correct right-to-left connected letters
+/ramadan | Ramadan atmosphere: lanterns, crescent, warm night light
+/eid | Eid celebration: festive lights, family, sweets
+
+## 19. FUSION PRESETS (ready-made combinations of several commands)
+/cinematicportrait | = /portrait /85mm /arri /rembrandt /filmic: cinematic film-still portrait
+/goldenportrait | = /portrait /goldenhour /kodak /85mm /backlight: warm glowing portrait
+/streetnoir | = /street /blackwhite /trix /hardlight /noir: gritty noir street scene
+/neoncity | = /cityscape /night /cinestill /neon /rain: rainy neon city night
+/luxuryproduct | = /product /studio /goldblack /softbox /sharp: premium product ad
+/desertepic | = /desert /goldenhour /drone /epic /ektar: epic dune landscape
+/heritagesaudi | = /najdi /goldenhour /hasselblad /warm /serene: Saudi heritage architecture
+/falconhero | = /falcon /lowangle /200mm /goldenhour /dramatic: heroic falconry shot
+/carcinematic | = /automotive /lowangle /anamorphic /bluehour /tealorange: cinematic car ad
+/garagetrd | = /automotive /neon /rimlight /moody /sharp: performance garage car shoot
+/fashioneditorial | = /fashion /vogue /beautydish /hasselblad /elegant: magazine fashion spread
+/foodad | = /food /softlight /105mm /warm /bokeh: appetizing menu shot
+/coffeemood | = /arabiccoffee /windowlight /portra160 /cozy /closeup: cozy Saudi coffee scene
+/ramadannight | = /ramadan /night /candlelight /bokeh /serene: peaceful Ramadan evening
+/weddingdream | = /wedding /goldenhour /fujipro /softglow /romantic: dreamy wedding photo
+/vintage70s | = /retro70s /portra800 /lightleak /faded /nostalgic: 1970s snapshot
+/polaroidmemory | = /polaroid /flash /faded /nostalgic /grain: instant-photo memory
+/animehero | = /anime /lowangle /rimlight /vibrant /epic: heroic anime key visual
+/ghiblistyle | = /watercolor /fairytale /pastel /serene /wide: soft hand-painted animated landscape, no copied characters
+/pixarcharacter | = /pixar /softlight /vibrant /playful /closeup: appealing 3D animated character
+/clayworld | = /claymation /miniature /tiltshift /playful /softlight: handmade clay diorama
+/cyberportrait | = /portrait /cyberpunk /rgb /neonnoir /rain: cyberpunk portrait
+/synthsunset | = /synthwave /sunset /retro80s /glow /wide: retro-futurist sunset
+/islamicgeometry | = /islamicart /symmetry /goldblack /centered /elegant: geometric ornament poster
+/calligraphyposter | = /calligraphy /poster /goldblack /minimal /centered: Arabic calligraphy poster
+/documentaryraw | = /documentary /35mm /leica /trix /handheld: raw documentary frame
+/wildlifeepic | = /wildlife /600mm /goldenhour /bokeh /dramatic: award-style wildlife shot
+/astrolandscape | = /astro /ultrawide /deepfocus /night /epic: Milky Way over landscape
+/underwaterdream | = /underwater /godrays /caustics /dreamy /monochromaticblue: dreamy underwater scene
+/darkfantasyart | = /darkfantasy /oilpainting /chiaroscuro /moody /epic: dark fantasy painting
+/thumbnailpop | = /thumbnail /vibrant /closeup /rimlight /sharp: scroll-stopping YouTube thumbnail
+/reelcover | = /story /cover /negativespace /vibrant /sharp: vertical Reel cover with text space
+/instaad | = /portrait45 /product /cleanretouch /vibrant /minimal: Instagram feed ad
+/mjcinematic | = /midjourney /cinematic /anamorphic /filmic /dramatic: Midjourney-style cinematic still
+/fluxreal | = /flux /photoreal /50mm /softlight /sharp: FLUX-style true-to-life photo
+/klingmotion | = /kling /cinematic /gimbal /motionblur /story: Kling-style vertical video frame
+/allmodelsmix | = /midjourney /flux /imagen /ideogram /seedream: fuse the strengths of all image models — artistic polish, photoreal skin, natural light, clean typography, rich color
